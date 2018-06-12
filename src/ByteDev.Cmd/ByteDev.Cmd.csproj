@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Company />
+    <Authors>Paul Stanley</Authors>
+    <Description>Library providing functionality to help when writing output from a .NET Console application.</Description>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>cmd commandline console output</PackageTags>
+    <Product />
+  </PropertyGroup>
+
+</Project>
