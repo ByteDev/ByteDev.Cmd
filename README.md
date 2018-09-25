@@ -1,4 +1,6 @@
-﻿# ByteDev.Cmd
+﻿[![NuGet Package](https://img.shields.io/nuget/v/ByteDev.Cmd.svg)](https://www.nuget.org/packages/ByteDev.Cmd)
+
+# ByteDev.Cmd
 
 Library providing functionality to help when writing output from a .NET Console application.
 
