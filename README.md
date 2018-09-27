@@ -1,4 +1,5 @@
-﻿[![NuGet Package](https://img.shields.io/nuget/v/ByteDev.Cmd.svg)](https://www.nuget.org/packages/ByteDev.Cmd)
+﻿[![Build status](https://ci.appveyor.com/api/projects/status/github/bytedev/ByteDev.Cmd?branch=master&svg=true)](https://ci.appveyor.com/project/bytedev/ByteDev-Cmd/branch/master)
+[![NuGet Package](https://img.shields.io/nuget/v/ByteDev.Cmd.svg)](https://www.nuget.org/packages/ByteDev.Cmd)
 
 # ByteDev.Cmd
 
