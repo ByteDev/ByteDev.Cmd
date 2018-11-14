@@ -1,5 +1,6 @@
-#addin "nuget:?package=Cake.Incubator&version=2.0.0"
-#tool "nuget:?package=xunit.runner.console"
+#addin nuget:?package=Cake.Incubator&version=3.0.0
+#tool "nuget:?package=NUnit.Runners&version=2.6.4"
+#load "ByteDev.Utilities.cake"
 
 var nugetSources = new[] {"https://api.nuget.org/v3/index.json"};
 
@@ -10,27 +11,19 @@ var solutionFilePath = "../src/ByteDev.Cmd.sln";
 var artifactsDirectory = Directory("../artifacts");
 var nugetDirectory = artifactsDirectory + Directory("NuGet");
 	
-// Configuration - The build configuration (Debug/Release) to use.
-// 1. If command line parameter parameter passed, use that.
-// 2. Otherwise if an Environment variable exists, use that.
-var configuration = 
-    HasArgument("Configuration") ? Argument<string>("Configuration") :
-    EnvironmentVariable("Configuration") != null ? EnvironmentVariable("Configuration") : "Release";
+var configuration = GetBuildConfiguration();
 	
 Information("Configurtion: " + configuration);
 
 
 Task("Clean")
     .Does(() =>
-{
-    CleanDirectory(artifactsDirectory);
+	{
+		CleanDirectory(artifactsDirectory);
 	
-	var binDirs = GetDirectories("../src/**/bin");
-	var objDirs = GetDirectories("../src/**/obj");
-
-	CleanDirectories(binDirs);
-	CleanDirectories(objDirs);
-});
+		CleanBinDirectories();
+		CleanObjDirectories();
+	});
 
 Task("Restore")
     .IsDependentOn("Clean")
@@ -48,20 +41,23 @@ Task("Build")
 	.IsDependentOn("Restore")
     .Does(() =>
 	{	
-        DotNetCoreBuild(
-            solutionFilePath,
-            new DotNetCoreBuildSettings()
-            {
-                Configuration = configuration
-            });
+		var settings = new DotNetCoreBuildSettings()
+        {
+            Configuration = configuration
+        };
+
+        DotNetCoreBuild(solutionFilePath, settings);
 	});
 	
 Task("CreateNuGetPackages")
     .IsDependentOn("Build")
     .Does(() =>
     {
+		var nugetVersion = GetNuGetVersion();
+
         var settings = new DotNetCorePackSettings()
 		{
+			ArgumentCustomization = args => args.Append("/p:Version=" + nugetVersion),
 			Configuration = configuration,
 			OutputDirectory = nugetDirectory
 		};

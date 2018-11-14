@@ -17,7 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEA99A6B-4C15-40B6-8988-0A92139AC6F2}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\build.cake = ..\build\build.cake
-		..\build\nuget-publish.ps1 = ..\build\nuget-publish.ps1
+		..\build\ByteDev.Utilities.cake = ..\build\ByteDev.Utilities.cake
 	EndProjectSection
 EndProject
 Global
