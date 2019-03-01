@@ -11,20 +11,17 @@ namespace ByteDev.Cmd
 
         public OutputColor TextColor
         {
-            get { return _textColor; }
-            set { _textColor = value ?? ConsoleEx.GetColor(); }
+            get => _textColor;
+            set => _textColor = value ?? ConsoleEx.GetColor();
         }
 
         public OutputColor BorderColor
         {
-            get { return _borderColor; }
-            set { _borderColor = value ?? ConsoleEx.GetColor(); }
+            get => _borderColor;
+            set => _borderColor = value ?? ConsoleEx.GetColor();
         }
 
-        public string[] Lines
-        {
-            get { return Text.Split('\n'); }
-        }
+        public string[] Lines => Text.Split('\n');
 
         public MessageBox(string text)
         {

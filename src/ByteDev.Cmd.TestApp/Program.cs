@@ -5,14 +5,9 @@ namespace ByteDev.Cmd.TestApp
 {
     internal class Program
     {
-        private static Output _output;
+        private static Output Output => new Output();
 
-        private static Output Output
-        {
-            get { return _output ?? (_output = new Output()); }
-        }
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Output.Clear();
 
