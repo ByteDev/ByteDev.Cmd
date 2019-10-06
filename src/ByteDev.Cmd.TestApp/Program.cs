@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using ByteDev.Cmd.Arguments;
 using ByteDev.Cmd.Logging;
 
 namespace ByteDev.Cmd.TestApp
@@ -9,19 +12,57 @@ namespace ByteDev.Cmd.TestApp
 
         private static void Main(string[] args)
         {
-            Output.Clear();
+            Output.WriteLine("ByteDev.Cmd.TestApp", new OutputColor(ConsoleColor.White, ConsoleColor.Blue));
+            Output.WriteLine();
 
-            TestOutput();
+            try
+            {
+                var cmdArgs = new CmdArgInfo(args, new List<CmdAllowedArg>
+                {
+                    new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
+                    new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
+                    new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"}
+                });
+
+                if (cmdArgs.HasArguments)
+                {
+                    foreach (var cmdArg in cmdArgs.Arguments)
+                    {
+                        switch (cmdArg.ShortName)
+                        {
+                            case 'o':
+                                TestOutput();
+                                break;
+
+                            case 'm':
+                                TestMessageBox();
+                                break;
+
+                            case 'l':
+                                TestLogger();
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    Output.WriteLine(cmdArgs.HelpText);
+                }
+            }
+            catch (CmdArgException ex)
+            {
+                Output.WriteLine(ex.Message, new OutputColor(ConsoleColor.Red));
+            }
             
-            TestMessageBox();
-
-            TestLogger();
-
             Prompt.PressAnyKey();
         }
 
         private static void TestOutput()
         {
+            Output.WriteLine();
+            Output.WriteLine("***** Testing Output *****");
+            Output.WriteLine();
+
             Output.WriteLine("Default colored text");
             Output.WriteLine();
 
@@ -56,6 +97,10 @@ namespace ByteDev.Cmd.TestApp
 
         private static void TestMessageBox()
         {
+            Output.WriteLine();
+            Output.WriteLine("***** Testing MessageBox *****");
+            Output.WriteLine();
+
             var messageBox = new MessageBox("this is text in a message box\nsecond\nthird line")
             {
                 BorderColor = new OutputColor(ConsoleColor.Red, ConsoleColor.Blue),
@@ -67,6 +112,10 @@ namespace ByteDev.Cmd.TestApp
 
         private static void TestLogger()
         {
+            Output.WriteLine();
+            Output.WriteLine("***** Testing Logger *****");
+            Output.WriteLine();
+
             var logger = new Logger(LogLevel.Debug);
 
             logger.WriteDebug("Debug message");
