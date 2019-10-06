@@ -25,9 +25,9 @@ A test console application (ByteDev.Cmd.TestApp) is provided for testing and usa
 
 ## Usage
 
-Public classes provided include Output, Logger, MessageBox, Keyboard, Prompt.
+Public classes provided include Output, Logger, MessageBox, Keyboard, Prompt.  The library also contains a namespace for handling input console arguments.
 
-### Output
+### Output class
 
 Provides wrapper functionality around the Console class to make writing out output easier.
 
@@ -42,7 +42,7 @@ Methods include:
 - WriteHorizontalLine: write horizontal line 
 - WriteBlankLines: write n blank lines
 
-### Logger
+### Logger class
 
 Given optional LogLevel, LoggerColorTheme and Output dependencies provides logger style functionality wrapped around the Console class.
 
@@ -52,3 +52,46 @@ Methods include:
 - WriteWarning
 - WriteError
 - WriteCritical
+
+### Arguments namespace
+
+Handle console arguments using a `CmdArgInfo` class.  Define what arguments are allowed using the `CmdAllowedArg` class.
+
+```csharp
+// args is the string array of args from Program.Main
+
+var cmdArgInfo = new CmdArgInfo(args, new List<CmdAllowedArg>
+{
+    new CmdAllowedArg('o', false) {LongName = "output", Description = "Output something"},
+    new CmdAllowedArg('p', true) {LongName = "path", Description = "Set a path"}
+});
+```
+
+When creating an instance of `CmdArgInfo` is there was any invalid input a `CmdArgException` will be thrown.
+
+Once you have an instance of `CmdArgInfo` you can use it to determine what operations to perform:
+
+```csharp
+if (cmdArgInfo.HasArguments)
+{
+    foreach (var cmdArg in cmdArgInfo.Arguments)
+    {
+        switch (cmdArg.ShortName)
+        {
+            case 'o':
+                DoSomeOutput();
+                break;
+
+            case 'p':
+                SetPath(cmdArg.Value);
+                break;
+        }
+    }
+}
+else
+{
+    Console.WriteLine(cmdArgInfo.HelpText);
+}
+```
+
+The ByteDev.Cmd.TestApp project has a working example of this.

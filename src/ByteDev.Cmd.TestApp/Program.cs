@@ -17,16 +17,16 @@ namespace ByteDev.Cmd.TestApp
 
             try
             {
-                var cmdArgs = new CmdArgInfo(args, new List<CmdAllowedArg>
+                var cmdArgInfo = new CmdArgInfo(args, new List<CmdAllowedArg>
                 {
                     new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
                     new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
                     new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"}
                 });
 
-                if (cmdArgs.HasArguments)
+                if (cmdArgInfo.HasArguments)
                 {
-                    foreach (var cmdArg in cmdArgs.Arguments)
+                    foreach (var cmdArg in cmdArgInfo.Arguments)
                     {
                         switch (cmdArg.ShortName)
                         {
@@ -46,7 +46,7 @@ namespace ByteDev.Cmd.TestApp
                 }
                 else
                 {
-                    Output.WriteLine(cmdArgs.HelpText);
+                    Output.WriteLine(cmdArgInfo.HelpText);
                 }
             }
             catch (CmdArgException ex)
