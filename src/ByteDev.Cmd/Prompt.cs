@@ -6,16 +6,14 @@ namespace ByteDev.Cmd
     {
         public static void PressAnyKey()
         {
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue");
+            Console.WriteLine("Press any key to continue...");
 
             Keyboard.WaitForAnyKey();
         }
 
         public static void PressEnter()
         {
-            Console.WriteLine();
-            Console.WriteLine("Press Enter to continue");
+            Console.WriteLine("Press Enter to continue...");
 
             Keyboard.WaitForKey(ConsoleKey.Enter);
         }
