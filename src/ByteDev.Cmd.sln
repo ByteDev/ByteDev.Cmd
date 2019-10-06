@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{F7FC354E-775C-4655-AF1A-2F61B4BD8AD6}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
+		..\RELEASE-NOTES.md = ..\RELEASE-NOTES.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEA99A6B-4C15-40B6-8988-0A92139AC6F2}"
@@ -21,7 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEA99A6B
 		..\build\ByteDev.Utilities.cake = ..\build\ByteDev.Utilities.cake
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.Cmd.UnitTests", "ByteDev.Cmd.UnitTests\ByteDev.Cmd.UnitTests.csproj", "{EB3F4EB2-C1BB-436D-9298-48578F385368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByteDev.Cmd.UnitTests", "ByteDev.Cmd.UnitTests\ByteDev.Cmd.UnitTests.csproj", "{EB3F4EB2-C1BB-436D-9298-48578F385368}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApp", "TestApp", "{6FABCE0F-8AB7-4C86-8326-530AFE89C7CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,7 +49,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5C353CA1-220C-45E7-A6A6-F7683E48A518} = {D9D9FED6-FB05-465C-B1D9-6AF160DB8D1A}
+		{5C353CA1-220C-45E7-A6A6-F7683E48A518} = {6FABCE0F-8AB7-4C86-8326-530AFE89C7CF}
 		{EB3F4EB2-C1BB-436D-9298-48578F385368} = {D9D9FED6-FB05-465C-B1D9-6AF160DB8D1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
