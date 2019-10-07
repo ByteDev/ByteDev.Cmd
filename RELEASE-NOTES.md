@@ -1,5 +1,17 @@
 # Release Notes
 
+## 1.1.1 - 07 Oct 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes:
+- Fix so all public types now have XML documentation.
+
+
 ## 1.1.0 - 06 Oct 2019
 
 Breaking changes:
