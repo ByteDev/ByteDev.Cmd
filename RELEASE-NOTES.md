@@ -1,5 +1,18 @@
 # Release Notes
 
+## 1.2.0 - 19 Oct 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- Added IsRequired property to CmdAllowedArg.
+- CmdArgInfo now checks that all required arguments have been supplied.
+
+Bug fixes:
+- (None)
+
+
 ## 1.1.1 - 07 Oct 2019
 
 Breaking changes:

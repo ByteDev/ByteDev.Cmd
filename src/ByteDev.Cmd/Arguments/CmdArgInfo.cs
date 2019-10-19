@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ByteDev.Cmd.Arguments
@@ -33,7 +34,7 @@ namespace ByteDev.Cmd.Arguments
         /// <summary>
         /// Help text for the allowed arguments.
         /// </summary>
-        public string HelpText => GetHelpText();
+        public string HelpText => CreateHelpText();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Arguments.CmdArgInfo" /> class.
@@ -77,14 +78,30 @@ namespace ByteDev.Cmd.Arguments
                     currentName = null;
                 }
             }
+
+            CheckAllRequiredArgsPresent();
         }
-        
+
+        private void CheckAllRequiredArgsPresent()
+        {
+            var sb = new StringBuilder();
+
+            foreach (var cmdAllowedArg in _cmdAllowedArgs.Where(caa => caa.IsRequired))
+            {
+                if (!Arguments.Any(a => a.ShortName == cmdAllowedArg.ShortName))
+                    sb.AppendLine($"Argument '{cmdAllowedArg.ShortName}' is required and not supplied.");
+            }
+
+            if (sb.Length > 0)
+                throw new CmdArgException(sb.ToString().TrimEnd());
+        }
+
         private static bool IsArgName(string arg)
         {
             return arg.Substring(0, 1) == ArgNamePrefix;
         }
         
-        private string GetHelpText()
+        private string CreateHelpText()
         {
             const string delimiter = "     ";
 

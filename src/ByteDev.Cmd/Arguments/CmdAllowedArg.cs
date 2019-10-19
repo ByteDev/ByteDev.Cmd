@@ -19,7 +19,7 @@
         }
 
         /// <summary>
-        /// Short name for the argument. Must be a single character long.
+        /// Single character name for the argument.
         /// </summary>
         public char ShortName { get; }
 
@@ -37,6 +37,11 @@
         /// Optional description of the argument. Used in help text for the user.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Whether the argument must be supplied. Not required by default.
+        /// </summary>
+        public bool IsRequired { get; set; }
 
         internal bool HasLongName => !string.IsNullOrEmpty(LongName);
 

@@ -10,17 +10,24 @@ namespace ByteDev.Cmd.UnitTests.Arguments
     [TestFixture]
     public class CmdArgInfoTests
     {
-        private readonly CmdAllowedArg _allowedPathArg = new CmdAllowedArg('p', true)
-        {
-            LongName = "path",
-            Description = "Path to the file."
-        };
+        private CmdAllowedArg _allowedPathArg;
+        private CmdAllowedArg _allowedAllFilesArg;
 
-        private readonly CmdAllowedArg _allowedAllFilesArg = new CmdAllowedArg('a', false)
+        [SetUp]
+        public void SetUp()
         {
-            LongName = "allfiles",
-            Description = "Should use all files."
-        };
+            _allowedPathArg = new CmdAllowedArg('p', true)
+            {
+                LongName = "path",
+                Description = "Path to the file."
+            };
+
+            _allowedAllFilesArg = new CmdAllowedArg('a', false)
+            {
+                LongName = "allfiles",
+                Description = "Should use all files."
+            };
+        }
 
         [TestFixture]
         public class Constructor : CmdArgInfoTests
@@ -87,6 +94,51 @@ namespace ByteDev.Cmd.UnitTests.Arguments
                 const string value = @"C:\Temp";
 
                 var sut = new CmdArgInfo(new[] { "-path", value, "-allfiles" }, new[] { _allowedPathArg, _allowedAllFilesArg });
+
+                Assert.That(sut.Arguments.First().Value, Is.EqualTo(value));
+                AssertAreEqual(sut.Arguments.First(), _allowedPathArg);
+
+                Assert.That(sut.Arguments.Second().Value, Is.Null);
+                AssertAreEqual(sut.Arguments.Second(), _allowedAllFilesArg);
+            }
+
+
+            [Test]
+            public void WhenOneArgIsRequiredAndNotPresent_ThenThrowException()
+            {
+                _allowedPathArg.IsRequired = true;
+
+                var args = new[] { "-a" };
+
+                var ex = Assert.Throws<CmdArgException>(() => new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
+                Assert.That(ex.Message, Is.EqualTo($"Argument '{_allowedPathArg.ShortName}' is required and not supplied."));
+            }
+
+            [Test]
+            public void WhenTwoArgIsRequiredAndNotPresent_ThenThrowException()
+            {
+                _allowedPathArg.IsRequired = true;
+                _allowedAllFilesArg.IsRequired = true;
+
+                var args = new string[0];
+
+                var expectedMessage =
+                    $"Argument '{_allowedPathArg.ShortName}' is required and not supplied." + Environment.NewLine +
+                    $"Argument '{_allowedAllFilesArg.ShortName}' is required and not supplied.";
+
+                var ex = Assert.Throws<CmdArgException>(() => new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
+                Assert.That(ex.Message, Is.EqualTo(expectedMessage));
+            }
+
+            [Test]
+            public void WhenTwoArgsIsRequired_AndAreBothPresent_ThenSetArguments()
+            {
+                const string value = @"C:\Temp";
+
+                _allowedPathArg.IsRequired = true;
+                _allowedAllFilesArg.IsRequired = true;
+
+                var sut = new CmdArgInfo(new[] { "-p", value, "-a" }, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.First().Value, Is.EqualTo(value));
                 AssertAreEqual(sut.Arguments.First(), _allowedPathArg);
