@@ -60,14 +60,16 @@ Handle console arguments using a `CmdArgInfo` class.  Define what arguments are 
 ```csharp
 // args is the string array of args from Program.Main
 
-var cmdArgInfo = new CmdArgInfo(args, new List<CmdAllowedArg>
+var allowedArgs = new List<CmdAllowedArg>
 {
     new CmdAllowedArg('o', false) {LongName = "output", Description = "Output something"},
     new CmdAllowedArg('p', true) {LongName = "path", Description = "Set a path"}
-});
+};
+
+var cmdArgInfo = new CmdArgInfo(args, allowedArgs);
 ```
 
-When creating an instance of `CmdArgInfo` is there was any invalid input a `CmdArgException` will be thrown.
+When creating an instance of `CmdArgInfo` if there was any invalid input a `CmdArgException` will be thrown.
 
 Once you have an instance of `CmdArgInfo` you can use it to determine what operations to perform:
 
@@ -90,7 +92,7 @@ if (cmdArgInfo.HasArguments)
 }
 else
 {
-    Console.WriteLine(cmdArgInfo.HelpText);
+    Console.WriteLine(allowedArgs.HelpText());
 }
 ```
 
