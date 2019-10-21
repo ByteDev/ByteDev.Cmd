@@ -1,11 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ByteDev.Cmd.Arguments
 {
-    internal static class ListCmdAllowedArgsExtensions
+    public static class CmdAllowedArgsListExtensions
     {
-        public static CmdAllowedArg GetAllowedArgOrThrow(this IList<CmdAllowedArg> source, string name)
+        public static string HelpText(this IList<CmdAllowedArg> source)
+        {
+            int lenLongestName = source.GetLongestNameLength();
+
+            var sb = new StringBuilder();
+
+            foreach (var allowedArg in source)
+            {
+                sb.Append(allowedArg.CreateHelpText(lenLongestName));
+            }
+
+            return sb.ToString();
+        }
+
+        internal static CmdAllowedArg GetAllowedArgOrThrow(this IList<CmdAllowedArg> source, string name)
         {
             var cmdAllowedArg = source.SingleOrDefault(a => a.ShortName.ToString() == name || a.LongName == name);
 
@@ -15,7 +30,7 @@ namespace ByteDev.Cmd.Arguments
             return cmdAllowedArg;
         }
 
-        public static int GetLongestNameLength(this IList<CmdAllowedArg> source)
+        internal static int GetLongestNameLength(this IList<CmdAllowedArg> source)
         {
             var len = 1;        // because short name is always len 1
 

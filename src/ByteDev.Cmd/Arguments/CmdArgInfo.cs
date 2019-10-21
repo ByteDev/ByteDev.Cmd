@@ -34,7 +34,7 @@ namespace ByteDev.Cmd.Arguments
         /// <summary>
         /// Help text for the allowed arguments.
         /// </summary>
-        public string HelpText => CreateHelpText();
+        public string HelpText => _cmdAllowedArgs.HelpText();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Arguments.CmdArgInfo" /> class.
@@ -99,43 +99,6 @@ namespace ByteDev.Cmd.Arguments
         private static bool IsArgName(string arg)
         {
             return arg.Substring(0, 1) == ArgNamePrefix;
-        }
-        
-        private string CreateHelpText()
-        {
-            const string delimiter = "     ";
-
-            var longestLenName = _cmdAllowedArgs.GetLongestNameLength();
-
-            var sb = new StringBuilder();
-
-            foreach (var allowedArg in _cmdAllowedArgs)
-            {
-                sb.Append(allowedArg.PrefixedShortName);
-
-                if (allowedArg.HasDescription)
-                {
-                    var padding = new string(' ', longestLenName - 1);
-                    sb.Append(padding + delimiter + allowedArg.Description);
-                }
-
-                sb.AppendLine();
-
-                if (allowedArg.HasLongName)
-                {
-                    sb.Append(allowedArg.PrefixedLongName);
-
-                    if (allowedArg.HasDescription)
-                    {
-                        var padding = new string(' ', longestLenName - allowedArg.LongName.Length);
-                        sb.Append(padding + delimiter + allowedArg.Description);
-                    }
-
-                    sb.AppendLine();
-                }
-            }
-         
-            return sb.ToString();
         }
     }
 }

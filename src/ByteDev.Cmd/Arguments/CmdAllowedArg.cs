@@ -1,4 +1,6 @@
-﻿namespace ByteDev.Cmd.Arguments
+﻿using System.Text;
+
+namespace ByteDev.Cmd.Arguments
 {
     /// <summary>
     /// Represents an allowed command line argument.
@@ -50,5 +52,37 @@
         internal string PrefixedShortName => ArgNamePrefix + ShortName;
 
         internal string PrefixedLongName => ArgNamePrefix + LongName;
+
+        internal string CreateHelpText(int lenLongestName)
+        {
+            const string delimiter = "     ";
+
+            var sb = new StringBuilder();
+
+            sb.Append(PrefixedShortName);
+
+            if (HasDescription)
+            {
+                var padding = new string(' ', lenLongestName - 1);
+                sb.Append(padding + delimiter + Description);
+            }
+
+            sb.AppendLine();
+
+            if (HasLongName)
+            {
+                sb.Append(PrefixedLongName);
+
+                if (HasDescription)
+                {
+                    var padding = new string(' ', lenLongestName - LongName.Length);
+                    sb.Append(padding + delimiter + Description);
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
     }
 }
