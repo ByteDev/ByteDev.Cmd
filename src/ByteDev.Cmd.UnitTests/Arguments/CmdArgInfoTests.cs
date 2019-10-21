@@ -155,35 +155,5 @@ namespace ByteDev.Cmd.UnitTests.Arguments
                 Assert.That(cmdArg.HasValue, Is.EqualTo(cmdAllowedArg.HasValue));
             }
         }
-
-        [TestFixture]
-        public class HelpText : CmdArgInfoTests
-        {
-            [Test]
-            public void WhenNoAllowedArgs_ThenReturnEmpty()
-            {
-                var sut = new CmdArgInfo(new string[0], new List<CmdAllowedArg>());
-
-                Assert.That(sut.HelpText, Is.Empty);
-            }
-
-            [Test]
-            public void WhenTwoAllowedArgs_ThenReturnHelpText()
-            {
-                var padding = new string(' ', 5);
-
-                string expected =
-                    "-p       " + padding + "Path to the file.\r\n" +
-                    "-path    " + padding + "Path to the file.\r\n" +
-                    "-a       " + padding + "Should use all files.\r\n" +
-                    "-allfiles" + padding + "Should use all files.\r\n";
-
-                const string value = @"C:\Temp";
-
-                var sut = new CmdArgInfo(new[] { "-p", value, "-a" }, new[] { _allowedPathArg, _allowedAllFilesArg });
-
-                Assert.That(sut.HelpText, Is.EqualTo(expected));
-            }
-        }
     }
 }

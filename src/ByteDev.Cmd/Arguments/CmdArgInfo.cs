@@ -32,11 +32,6 @@ namespace ByteDev.Cmd.Arguments
         }
         
         /// <summary>
-        /// Help text for the allowed arguments.
-        /// </summary>
-        public string HelpText => _cmdAllowedArgs.HelpText();
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Arguments.CmdArgInfo" /> class.
         /// </summary>
         /// <param name="inputArgs">Command line arguments. Usually from the Program.Main method.</param>

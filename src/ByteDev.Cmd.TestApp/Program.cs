@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using ByteDev.Cmd.Arguments;
 using ByteDev.Cmd.Logging;
 
@@ -15,14 +14,16 @@ namespace ByteDev.Cmd.TestApp
             Output.WriteLine("ByteDev.Cmd.TestApp", new OutputColor(ConsoleColor.White, ConsoleColor.Blue));
             Output.WriteLine();
 
+            var cmdAllowedArgs = new List<CmdAllowedArg>
+            {
+                new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
+                new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
+                new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"}
+            };
+
             try
             {
-                var cmdArgInfo = new CmdArgInfo(args, new List<CmdAllowedArg>
-                {
-                    new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
-                    new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
-                    new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"}
-                });
+                var cmdArgInfo = new CmdArgInfo(args, cmdAllowedArgs);
 
                 if (cmdArgInfo.HasArguments)
                 {
@@ -46,12 +47,13 @@ namespace ByteDev.Cmd.TestApp
                 }
                 else
                 {
-                    Output.WriteLine(cmdArgInfo.HelpText);
+                    Output.WriteLine(cmdAllowedArgs.HelpText());
                 }
             }
             catch (CmdArgException ex)
             {
                 Output.WriteLine(ex.Message, new OutputColor(ConsoleColor.Red));
+                Output.WriteLine(cmdAllowedArgs.HelpText());
             }
             
             Prompt.PressAnyKey();
