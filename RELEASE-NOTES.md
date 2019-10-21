@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.0.0 - 21 Oct 2019
+
+Breaking changes:
+- Removed HelpText from CmdArgInfo, is now public extension method on IList<CmdAllowedArg>
+
+New features:
+- (None)
+
+Bug fixes:
+- (None)
+
 ## 1.2.0 - 19 Oct 2019
 
 Breaking changes:
