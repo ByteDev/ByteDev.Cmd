@@ -18,7 +18,8 @@ namespace ByteDev.Cmd.TestApp
             {
                 new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
                 new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
-                new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"}
+                new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"},
+                new CmdAllowedArg('t', false) {LongName = "table", Description = "Test table"}
             };
 
             try
@@ -41,6 +42,10 @@ namespace ByteDev.Cmd.TestApp
 
                             case 'l':
                                 TestLogger();
+                                break;
+
+                            case 't':
+                                TestTable();
                                 break;
                         }
                     }
@@ -125,6 +130,59 @@ namespace ByteDev.Cmd.TestApp
             logger.WriteWarning("Warning message");
             logger.WriteError("Error message");
             logger.WriteCritical("Critical message");
+        }
+
+        private static void TestTable()
+        {
+            Output.WriteLine();
+            Output.WriteLine("***** Testing Table *****");
+            Output.WriteLine();
+
+            var table = CreateTable();
+            Output.Write(table);
+
+            var emptyTable = CreateEmptyTable();
+            Output.Write(emptyTable);
+
+            var defaultValueTable = CreateDefaultValueTable();
+            Output.Write(defaultValueTable);
+        }
+
+        private static Table CreateTable()
+        {
+            var table = new Table(3, 3)
+            {
+                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue),
+                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
+            };
+
+            table.InsertValue(new TablePosition(0, 0), "A111");
+
+            table.InsertValue(new TablePosition(0, 1), "B1");
+            table.InsertValue(new TablePosition(1, 1), "B2");
+            table.InsertValue(new TablePosition(2, 1), "B3");
+
+            table.InsertValue(new TablePosition(2, 2), "C3");
+            
+            return table;
+        }
+
+        private static Table CreateEmptyTable()
+        {
+            return new Table(3, 3)
+            {
+                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red),
+                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red)
+            };
+        }
+
+        private static Table CreateDefaultValueTable()
+        {
+            return new Table(3, 4, "AAAAA")
+            {
+                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray),
+                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray)
+            };
         }
     }
 }

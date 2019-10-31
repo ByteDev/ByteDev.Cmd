@@ -43,20 +43,40 @@ namespace ByteDev.Cmd
         /// <param name="messageBox">The message box to write.</param>
         public void Write(MessageBox messageBox)
         {
-            var horizonalLine = CreateHorizonalLine(messageBox.Lines);
+            var horizontalLine = CreateHorizonalLine(messageBox.Lines);
             
-            WriteLine($"╔{horizonalLine}╗", messageBox.BorderColor);
+            WriteLine($"╔{horizontalLine}╗", messageBox.BorderColor);
 
             foreach (var line in messageBox.Lines)
             {
-                var paddedLine = line.PadRight(horizonalLine.Length);
+                var paddedLine = line.PadRight(horizontalLine.Length);
 
                 Write("║", messageBox.BorderColor);
                 Write(paddedLine, messageBox.TextColor);
                 WriteLine("║", messageBox.BorderColor);
             }
 
-            WriteLine($"╚{horizonalLine}╝", messageBox.BorderColor);
+            WriteLine($"╚{horizontalLine}╝", messageBox.BorderColor);
+        }
+
+        /// <summary>
+        /// Write a table to the console.
+        /// </summary>
+        /// <param name="table">The table to write.</param>
+        public void Write(Table table)
+        {
+            var horizontalLine = CreateHorizonalLine(table);
+
+            WriteLine($"╔{horizontalLine}╗", table.BorderColor);
+
+            for (var row=0; row < table.Rows; row++)
+            {
+                Write("║", table.BorderColor);
+                Write(table.GetLine(row), table.ValueColor);
+                WriteLine("║", table.BorderColor);
+            }
+            
+            WriteLine($"╚{horizontalLine}╝", table.BorderColor);
         }
 
         /// <summary>
@@ -216,7 +236,23 @@ namespace ByteDev.Cmd
         {
             var longestLineLen = lines.GetLongestElementLength();
 
-            return new string('═', longestLineLen);
+            return CreateHorizonalLine(longestLineLen);
+        }
+
+        private static string CreateHorizonalLine(Table table)
+        {
+            var totalValueWidths = table.Columns * table.GetLongestValueLength();
+
+            var totalPaddingsLength = (table.LeftPadding.Length + table.RightPadding.Length) * table.Columns;
+
+            var charLength = totalValueWidths + totalPaddingsLength;
+
+            return CreateHorizonalLine(charLength);
+        }
+
+        private static string CreateHorizonalLine(int length)
+        {
+            return new string('═', length);
         }
     }
 }
