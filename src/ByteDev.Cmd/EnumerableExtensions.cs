@@ -5,20 +5,20 @@ namespace ByteDev.Cmd
 {
     internal static class EnumerableExtensions
     {
-        public static int GetLongestElementLength(this IEnumerable<string> source)
+        public static string GetLongestElement(this IEnumerable<string> source)
         {
             if(source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            var longestElementLength = 0;
+            string longestElement = null;
 
             foreach (var element in source)
             {
-                if (element.Length > longestElementLength)
-                    longestElementLength = element.Length;
+                if (longestElement == null || element.Length > longestElement.Length)
+                    longestElement = element;
             }
 
-            return longestElementLength;
+            return longestElement;
         }
     }
 }

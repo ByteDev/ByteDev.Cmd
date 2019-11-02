@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ByteDev.Cmd
 {
@@ -43,7 +42,7 @@ namespace ByteDev.Cmd
         /// <param name="messageBox">The message box to write.</param>
         public void Write(MessageBox messageBox)
         {
-            var horizontalLine = CreateHorizonalLine(messageBox.Lines);
+            var horizontalLine = HorizontalLineFactory.Create(messageBox.Lines);
             
             WriteLine($"╔{horizontalLine}╗", messageBox.BorderColor);
 
@@ -65,7 +64,7 @@ namespace ByteDev.Cmd
         /// <param name="table">The table to write.</param>
         public void Write(Table table)
         {
-            var horizontalLine = CreateHorizonalLine(table);
+            var horizontalLine = HorizontalLineFactory.Create(table);
 
             WriteLine($"╔{horizontalLine}╗", table.BorderColor);
 
@@ -232,27 +231,6 @@ namespace ByteDev.Cmd
             }
         }
 
-        private static string CreateHorizonalLine(IEnumerable<string> lines)
-        {
-            var longestLineLen = lines.GetLongestElementLength();
 
-            return CreateHorizonalLine(longestLineLen);
-        }
-
-        private static string CreateHorizonalLine(Table table)
-        {
-            var totalValueWidths = table.Columns * table.GetLongestValueLength();
-
-            var totalPaddingsLength = (table.LeftPadding.Length + table.RightPadding.Length) * table.Columns;
-
-            var charLength = totalValueWidths + totalPaddingsLength;
-
-            return CreateHorizonalLine(charLength);
-        }
-
-        private static string CreateHorizonalLine(int length)
-        {
-            return new string('═', length);
-        }
     }
 }
