@@ -90,38 +90,76 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Return a cell value based on its position.
         /// </summary>
-        /// <param name="position">The position in the table to retrieve the value.</param>
+        /// <param name="position">The position of the cell in the table.</param>
         /// <returns>The value at the <paramref name="position" />.</returns>
-        public string GetValue(TablePosition position)
+        public string GetCell(TablePosition position)
         {
             try
             {
-                return _cells[position.X, position.Y];
+                return _cells[position.Column, position.Row];
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"Cannot retrieve value at position {position}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"Cannot retrieve cell value at position {position}. Position is outside the bounds of the table.", ex);
             }
         }
 
         /// <summary>
-        /// Insert a value at a certain position in the table.
+        /// Update a cell's value at a certain position in the table.
         /// </summary>
-        /// <param name="position">The position in the table to insert the value.</param>
-        /// <param name="value">The value to insert.</param>
-        public void InsertValue(TablePosition position, string value)
+        /// <param name="position">The position of the cell in the table.</param>
+        /// <param name="value">The value to update with.</param>
+        public void UpdateCell(TablePosition position, string value)
         {
             try
             {
-                _cells[position.X, position.Y] = value;
+                _cells[position.Column, position.Row] = value;
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"Cannot insert value into position {position}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"Cannot update value at position {position}. Position is outside the bounds of the table.", ex);
             }
         }
 
-        internal string GetLine(int rowPosition)
+        /// <summary>
+        /// Update all the cell values on a particular row.
+        /// </summary>
+        /// <param name="position">The position of the first cell to update on the row.</param>
+        /// <param name="values">The values to update the row with.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
+        public void UpdateRow(TablePosition position, string[] values)
+        {
+            if(values == null)
+                throw new ArgumentNullException(nameof(values));
+
+            if(position.Column >= Columns)
+                throw new ArgumentOutOfRangeException($"Cannot update value at row {position}. Position is outside the bounds of the table.");
+
+            var col = position.Column;
+            var valuesIndex = 0;
+
+            try
+            {
+                while (col < Columns)
+                {
+                    if (valuesIndex >= values.Length)
+                        return;
+
+                    _cells[col, position.Row] = values[valuesIndex];
+
+                    col++;
+                    valuesIndex++;
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new ArgumentOutOfRangeException($"Cannot update value at row {col}x{position.Row}. Position is outside the bounds of the table.", ex);
+            }
+        }
+        
+        // TODO: string[] GetLine(int rowPosition)
+
+        internal string GetLineText(int rowPosition)
         {
             if(rowPosition < 0 || rowPosition > Rows - 1)
                 throw new ArgumentOutOfRangeException(nameof(rowPosition), $"No row exists at position {rowPosition}.");

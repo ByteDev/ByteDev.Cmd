@@ -1,5 +1,20 @@
 # Release Notes
 
+## 3.0.0 - ?
+
+Breaking changes:
+- Table GetValue is now GetCell
+- Table InsertValue is now UpdateCell
+- TablePosition X is now Column.
+- TablePosition Y is now Rows.
+
+New features:
+- Added Table.UpdateRow.
+
+Bug fixes:
+- (None)
+
+
 ## 2.1.0 - 04 Nov 2019
 
 Breaking changes:

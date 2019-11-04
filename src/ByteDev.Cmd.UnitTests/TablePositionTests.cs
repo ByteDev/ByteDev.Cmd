@@ -26,8 +26,8 @@ namespace ByteDev.Cmd.UnitTests
             {
                 var sut = new TablePosition(0, 1);
 
-                Assert.That(sut.X, Is.EqualTo(0));
-                Assert.That(sut.Y, Is.EqualTo(1));
+                Assert.That(sut.Column, Is.EqualTo(0));
+                Assert.That(sut.Row, Is.EqualTo(1));
             }
         }
 

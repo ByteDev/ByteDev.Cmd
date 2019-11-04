@@ -94,7 +94,7 @@ namespace ByteDev.Cmd
             for (var row=0; row < table.Rows; row++)
             {
                 Write(table.BorderStyle.VerticalLine, table.BorderColor);
-                Write(table.GetLine(row), table.ValueColor);
+                Write(table.GetLineText(row), table.ValueColor);
                 WriteLine(table.BorderStyle.VerticalLine, table.BorderColor);
             }
             

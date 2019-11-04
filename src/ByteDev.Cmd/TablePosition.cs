@@ -8,32 +8,32 @@ namespace ByteDev.Cmd
     public struct TablePosition
     {
         /// <summary>
-        /// Position on the X axis.
+        /// Column number position.
         /// </summary>
-        public int X { get; }
+        public int Column { get; }
 
         /// <summary>
-        /// Position on the Y axis.
+        /// Row number position.
         /// </summary>
-        public int Y { get; }
+        public int Row { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.TablePosition" /> class.
         /// </summary>
-        /// <param name="x">Position on the X axis.</param>
-        /// <param name="y">Position on the Y axis.</param>
-        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="x" /> cannot be less than zero.</exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="y" /> cannot be less than zero.</exception>
-        public TablePosition(int x, int y)
+        /// <param name="column">Column number position.</param>
+        /// <param name="row">Row number position.</param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="column" /> cannot be less than zero.</exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="row" /> cannot be less than zero.</exception>
+        public TablePosition(int column, int row)
         {
-            if (x < 0)
-                throw new ArgumentOutOfRangeException(nameof(x), x, "X cannot be less than zero.");
+            if (column < 0)
+                throw new ArgumentOutOfRangeException(nameof(column), column, "Column number cannot be less than zero.");
 
-            if (y < 0)
-                throw new ArgumentOutOfRangeException(nameof(y), y, "Y cannot be less than zero.");
+            if (row < 0)
+                throw new ArgumentOutOfRangeException(nameof(row), row, "Row number cannot be less than zero.");
 
-            X = x;
-            Y = y;
+            Column = column;
+            Row = row;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ByteDev.Cmd
         /// <returns>String representation of <see cref="T:ByteDev.Cmd.TablePosition" />.</returns>
         public override string ToString()
         {
-            return $"{X}x{Y}";
+            return $"{Column}x{Row}";
         }
     }
 }

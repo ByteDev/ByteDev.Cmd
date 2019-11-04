@@ -35,20 +35,20 @@ namespace ByteDev.Cmd.UnitTests
             {
                 var sut = new Table(2, 1, "A");
 
-                Assert.That(sut.GetValue(new TablePosition(0, 0)), Is.EqualTo("A"));
-                Assert.That(sut.GetValue(new TablePosition(1, 0)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("A"));
             }
         }
 
         [TestFixture]
-        public class GetValue : TableTests
+        public class GetCell : TableTests
         {
             [Test]
             public void WhenPositionOutOfBoundsOnX_ThenThrowException()
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetValue(new TablePosition(2, 0)));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetCell(new TablePosition(2, 0)));
             }
             
             [Test]
@@ -56,7 +56,7 @@ namespace ByteDev.Cmd.UnitTests
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetValue(new TablePosition(0, 2)));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetCell(new TablePosition(0, 2)));
             }
 
             [Test]
@@ -64,21 +64,21 @@ namespace ByteDev.Cmd.UnitTests
             {
                 var sut = new Table(2, 2);
 
-                var result = sut.GetValue(new TablePosition(0, 0));
+                var result = sut.GetCell(new TablePosition(0, 0));
 
                 Assert.That(result, Is.Null);
             }
         }
 
         [TestFixture]
-        public class InsertValue : TableTests
+        public class UpdateCell : TableTests
         {
             [Test]
             public void WhenPositionOutOfBoundsOnX_ThenThrowException()
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.InsertValue(new TablePosition(2, 0), "A"));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new TablePosition(2, 0), "A"));
             }
 
 
@@ -87,7 +87,7 @@ namespace ByteDev.Cmd.UnitTests
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.InsertValue(new TablePosition(0, 2), "A"));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new TablePosition(0, 2), "A"));
             }
 
             [Test]
@@ -96,12 +96,122 @@ namespace ByteDev.Cmd.UnitTests
                 var sut = new Table(2, 2, "A");
                 var position = new TablePosition(0, 0);
 
-                sut.InsertValue(position, "X");
+                sut.UpdateCell(position, "X");
 
-                Assert.That(sut.GetValue(position), Is.EqualTo("X"));
-                Assert.That(sut.GetValue(new TablePosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(sut.GetValue(new TablePosition(1, 0)), Is.EqualTo("A"));
-                Assert.That(sut.GetValue(new TablePosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(position), Is.EqualTo("X"));
+                Assert.That(sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+            }
+        }
+
+        [TestFixture]
+        public class UpdateRow : TableTests
+        {
+            private Table _sut;
+
+            [SetUp]
+            public void SetUp()
+            {
+                _sut = new Table(2, 2, "A");
+            }
+            
+            [Test]
+            public void WhenValuesIsNull_ThenThrowException()
+            {
+                var position = new TablePosition(0, 0);
+
+                Assert.Throws<ArgumentNullException>(() => _sut.UpdateRow(position, null));
+            }
+
+            [Test]
+            public void WhenRowPositionGreaterThanOrEqualToTableRowSize_ThenThrowException()
+            {
+                var position = new TablePosition(0, 2);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { "X", "Y" }));
+            }
+
+            [Test]
+            public void WhenColumnPositionGreaterThanOrEqualToTableColumnSize_ThenThrowException()
+            {
+                var position = new TablePosition(2, 0);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { "X", "Y" }));
+            }
+
+            [Test]
+            public void WhenValuesIsEmpty_ThenDoNothing()
+            {
+                var position = new TablePosition(0, 0);
+
+                _sut.UpdateRow(position, new string[0]);
+
+                Assert.That(_sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+            }
+
+            [Test]
+            public void WhenValuesSameLengthAsNumberColumns_ThenUpdateCells()
+            {
+                var position = new TablePosition(0, 0);
+
+                _sut.UpdateRow(position, new []{ "X", "Y" });
+
+                Assert.That(_sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("Y"));
+                Assert.That(_sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+            }
+
+            [Test]
+            public void WhenValuesShorterThanNumberOfColumns_ThenUpdateCells()
+            {
+                var position = new TablePosition(0, 0);
+
+                _sut.UpdateRow(position, new[] { "X" });
+
+                Assert.That(_sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+            }
+
+            [Test]
+            public void WhenValuesLongerThanNumberOfColumns_ThenUpdateCells()
+            {
+                var position = new TablePosition(0, 0);
+
+                _sut.UpdateRow(position, new[] { "X", "Y", "Z" });
+
+                Assert.That(_sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("Y"));
+                Assert.That(_sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+            }
+
+            [Test]
+            public void WhenStartingColumnIsNotZero_ThenUpdateCells()
+            {
+                var sut = new Table(3, 3, "A");
+
+                var position = new TablePosition(1, 0);
+
+                sut.UpdateRow(position, new[] { "X", "Y" });
+
+                Assert.That(sut.GetCell(new TablePosition(0, 0)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 0)), Is.EqualTo("X"));
+                Assert.That(sut.GetCell(new TablePosition(2, 0)), Is.EqualTo("Y"));
+
+                Assert.That(sut.GetCell(new TablePosition(0, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(2, 1)), Is.EqualTo("A"));
+
+                Assert.That(sut.GetCell(new TablePosition(0, 2)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(1, 2)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new TablePosition(2, 2)), Is.EqualTo("A"));
             }
         }
     }
