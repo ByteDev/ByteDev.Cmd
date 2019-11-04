@@ -1,4 +1,5 @@
 ﻿using System;
+using ByteDev.Cmd.Borders;
 
 namespace ByteDev.Cmd
 {
@@ -9,6 +10,7 @@ namespace ByteDev.Cmd
     {
         private OutputColor _textColor;
         private OutputColor _borderColor;
+        private IBorderStyle _borderStyle;
 
         /// <summary>
         /// The text inside the message box.
@@ -22,6 +24,15 @@ namespace ByteDev.Cmd
         {
             get => _textColor;
             set => _textColor = value ?? ConsoleEx.GetColor();
+        }
+
+        /// <summary>
+        /// Border style.
+        /// </summary>
+        public IBorderStyle BorderStyle
+        {
+            get => _borderStyle ?? (_borderStyle = new BorderDouble());
+            set => _borderStyle = value;
         }
 
         /// <summary>

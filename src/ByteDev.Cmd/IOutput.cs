@@ -1,4 +1,6 @@
-﻿namespace ByteDev.Cmd
+﻿using ByteDev.Cmd.Borders;
+
+namespace ByteDev.Cmd
 {
     /// <summary>
     /// Represents the interface for writing text to the console.
@@ -28,7 +30,13 @@
         /// </summary>
         /// <param name="messageBox">The message box to write.</param>
         void Write(MessageBox messageBox);
-        
+
+        /// <summary>
+        /// Write a table to the console.
+        /// </summary>
+        /// <param name="table">The table to write.</param>
+        void Write(Table table);
+
         /// <summary>
         /// Write a blank line to the console.
         /// </summary>

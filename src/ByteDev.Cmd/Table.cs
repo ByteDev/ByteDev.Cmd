@@ -1,30 +1,56 @@
 ﻿using System;
 using System.Text;
+using ByteDev.Cmd.Borders;
 
 namespace ByteDev.Cmd
 {
+    /// <summary>
+    /// Represents a console table.
+    /// </summary>
     public class Table
     {
         private readonly string[,] _cells;
 
+        private IBorderStyle _borderStyle;
         private OutputColor _borderColor;
         private OutputColor _valueColor;
 
+        /// <summary>
+        /// Number of columns.
+        /// </summary>
         public int Columns { get; }
 
+        /// <summary>
+        /// Number of rows.
+        /// </summary>
         public int Rows { get; }
-
+        
+        /// <summary>
+        /// Padding to apply to the left of each table cell.
+        /// </summary>
         public string LeftPadding { get; set; } = " ";
 
+        /// <summary>
+        /// Padding to apply to the right of each table cell.
+        /// </summary>
         public string RightPadding { get; set; } = " ";
+
+        /// <summary>
+        /// Border style.
+        /// </summary>
+        public IBorderStyle BorderStyle
+        {
+            get => _borderStyle ?? (_borderStyle = new BorderDouble());
+            set => _borderStyle = value;
+        }
 
         /// <summary>
         /// Color of the table border.
         /// </summary>
         public OutputColor BorderColor
         {
-            get => _borderColor;
-            set => _borderColor = value ?? ConsoleEx.GetColor();
+            get => _borderColor ?? (_borderColor = ConsoleEx.GetColor());
+            set => _borderColor = value;
         }
         
         /// <summary>
@@ -32,8 +58,8 @@ namespace ByteDev.Cmd
         /// </summary>
         public OutputColor ValueColor
         {
-            get => _valueColor;
-            set => _valueColor = value ?? ConsoleEx.GetColor();
+            get => _valueColor ?? (_valueColor = ConsoleEx.GetColor());
+            set => _valueColor = value;
         }
 
         /// <summary>
@@ -61,6 +87,11 @@ namespace ByteDev.Cmd
                 _cells.Populate(defaultValue);
         }
         
+        /// <summary>
+        /// Return a cell value based on its position.
+        /// </summary>
+        /// <param name="position">The position in the table to retrieve the value.</param>
+        /// <returns>The value at the <paramref name="position" />.</returns>
         public string GetValue(TablePosition position)
         {
             try
@@ -73,6 +104,11 @@ namespace ByteDev.Cmd
             }
         }
 
+        /// <summary>
+        /// Insert a value at a certain position in the table.
+        /// </summary>
+        /// <param name="position">The position in the table to insert the value.</param>
+        /// <param name="value">The value to insert.</param>
         public void InsertValue(TablePosition position, string value)
         {
             try
@@ -108,7 +144,7 @@ namespace ByteDev.Cmd
 
         internal int GetLongestValueLength()
         {
-            int length = 0;
+            var length = 0;
 
             foreach (var cell in _cells)
             {

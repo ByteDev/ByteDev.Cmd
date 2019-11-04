@@ -12,13 +12,5 @@
                 }
             }
         }
-
-        public static void Populate<T>(this T[] source, T value)
-        {
-            for (var i = 0; i < source.Length; i++)
-            {
-                source[i] = value;
-            }
-        }
     }
 }

@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using ByteDev.Cmd.Borders;
 
 namespace ByteDev.Cmd
 {
     internal static class HorizontalLineFactory
     {
-        public static string Create(IEnumerable<string> lines)
+        public static string Create(MessageBox messageBox)
         {
-            var longestLine = lines.GetLongestElement();
+            var longestLine = messageBox.Lines.GetLongestElement();
 
-            return Create(longestLine.Length);
+            return new string(messageBox.BorderStyle.HorizontalLine, longestLine.Length);
         }
 
         public static string Create(Table table)
@@ -19,12 +19,17 @@ namespace ByteDev.Cmd
 
             var charLength = totalValueWidths + totalPaddingsLength;
 
-            return Create(charLength);
+            return new string(table.BorderStyle.HorizontalLine, charLength);
         }
 
-        private static string Create(int length)
+        public static string CreateTop(string horizontalLine, IBorderStyle borderStyle)
         {
-            return new string('═', length);
+            return $"{borderStyle.LeftTop}{horizontalLine}{borderStyle.RightTop}";
+        }
+
+        public static string CreateBottom(string horizontalLine, IBorderStyle borderStyle)
+        {
+            return $"{borderStyle.LeftBottom}{horizontalLine}{borderStyle.RightBottom}";
         }
     }
 }

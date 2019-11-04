@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ByteDev.Cmd.Arguments;
+using ByteDev.Cmd.Borders;
 using ByteDev.Cmd.Logging;
 
 namespace ByteDev.Cmd.TestApp
@@ -138,6 +139,9 @@ namespace ByteDev.Cmd.TestApp
             Output.WriteLine("***** Testing Table *****");
             Output.WriteLine();
 
+            var t = new Table(1, 1, "XXX");
+            Output.Write(t);
+            
             var table = CreateTable();
             Output.Write(table);
 
@@ -171,6 +175,7 @@ namespace ByteDev.Cmd.TestApp
         {
             return new Table(3, 3)
             {
+                BorderStyle = new BorderSingle(),
                 BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red),
                 ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red)
             };
@@ -180,6 +185,7 @@ namespace ByteDev.Cmd.TestApp
         {
             return new Table(3, 4, "AAAAA")
             {
+                BorderStyle = new BorderDouble(),
                 BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray),
                 ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray)
             };

@@ -42,40 +42,40 @@ namespace ByteDev.Cmd
         /// <param name="messageBox">The message box to write.</param>
         public void Write(MessageBox messageBox)
         {
-            var horizontalLine = HorizontalLineFactory.Create(messageBox.Lines);
+            var horizontalLine = HorizontalLineFactory.Create(messageBox);
             
-            WriteLine($"╔{horizontalLine}╗", messageBox.BorderColor);
+            WriteLine(HorizontalLineFactory.CreateTop(horizontalLine, messageBox.BorderStyle), messageBox.BorderColor);
 
             foreach (var line in messageBox.Lines)
             {
                 var paddedLine = line.PadRight(horizontalLine.Length);
 
-                Write("║", messageBox.BorderColor);
+                Write(messageBox.BorderStyle.VerticalLine.ToString(), messageBox.BorderColor);
                 Write(paddedLine, messageBox.TextColor);
-                WriteLine("║", messageBox.BorderColor);
+                WriteLine(messageBox.BorderStyle.VerticalLine.ToString(), messageBox.BorderColor);
             }
 
-            WriteLine($"╚{horizontalLine}╝", messageBox.BorderColor);
+            WriteLine(HorizontalLineFactory.CreateBottom(horizontalLine, messageBox.BorderStyle), messageBox.BorderColor);
         }
-
+        
         /// <summary>
         /// Write a table to the console.
         /// </summary>
         /// <param name="table">The table to write.</param>
         public void Write(Table table)
         {
-            var horizontalLine = HorizontalLineFactory.Create(table);
+            var line = HorizontalLineFactory.Create(table);
 
-            WriteLine($"╔{horizontalLine}╗", table.BorderColor);
+            WriteLine(HorizontalLineFactory.CreateTop(line, table.BorderStyle), table.BorderColor);
 
             for (var row=0; row < table.Rows; row++)
             {
-                Write("║", table.BorderColor);
+                Write(table.BorderStyle.VerticalLine.ToString(), table.BorderColor);
                 Write(table.GetLine(row), table.ValueColor);
-                WriteLine("║", table.BorderColor);
+                WriteLine(table.BorderStyle.VerticalLine.ToString(), table.BorderColor);
             }
             
-            WriteLine($"╚{horizontalLine}╝", table.BorderColor);
+            WriteLine(HorizontalLineFactory.CreateBottom(line, table.BorderStyle), table.BorderColor);
         }
 
         /// <summary>
