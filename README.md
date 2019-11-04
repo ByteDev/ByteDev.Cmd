@@ -32,15 +32,15 @@ Public classes provided include Output, Logger, MessageBox, Keyboard, Prompt.  T
 Provides wrapper functionality around the Console class to make writing out output easier.
 
 Methods include:
-- Write: write text or MessageBox
-- WriteLine: write line of text
-- WriteRainbowLine: write text in some crazy rainbow colors ;-)
-- WriteAlignLeft: write left aligned text (padded entire line)
-- WriteAlignRight: write right aligned text (padded entire line)
-- WriteAlignCenter: write center aligned text (padded entire line)
-- WriteAlignToSides: writes some text left aligned and some text right aligned (padded entire line)
-- WriteHorizontalLine: write horizontal line 
-- WriteBlankLines: write n blank lines
+- Write: write text, MessageBox, Table.
+- WriteLine: write line of text.
+- WriteRainbowLine: write text in some crazy rainbow colors ;-).
+- WriteAlignLeft: write left aligned text (padded entire line).
+- WriteAlignRight: write right aligned text (padded entire line).
+- WriteAlignCenter: write center aligned text (padded entire line).
+- WriteAlignToSides: writes some text left aligned and some text right aligned (padded entire line).
+- WriteHorizontalLine: write horizontal line.
+- WriteBlankLines: write n blank lines.
 
 ### Logger class
 

@@ -1,5 +1,18 @@
 # Release Notes
 
+## 2.1.0 - 04 Nov 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- Added concept of BorderStyle (IBorderStyle, BorderSingle, BorderDouble classes)
+- Added MessagBox.BorderStyle property.
+- Added Table class and the ability to write it in the Output class.
+
+Bug fixes:
+- (None)
+
 ## 2.0.0 - 21 Oct 2019
 
 Breaking changes:
