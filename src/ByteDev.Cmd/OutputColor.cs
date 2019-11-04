@@ -3,7 +3,7 @@
 namespace ByteDev.Cmd
 {
     /// <summary>
-    /// Represents the colors to use when outputting in the console.
+    /// Represents the colors to use when writing to the console.
     /// </summary>
     public class OutputColor
     {

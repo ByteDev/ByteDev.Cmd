@@ -9,6 +9,8 @@ New features:
 - Added concept of BorderStyle (IBorderStyle, BorderSingle, BorderDouble classes)
 - Added MessagBox.BorderStyle property.
 - Added Table class and the ability to write it in the Output class.
+- Added Output.Write(char)
+- Added Output.WriteLine(char)
 
 Bug fixes:
 - (None)
