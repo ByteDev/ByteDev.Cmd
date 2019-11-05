@@ -11,6 +11,7 @@ Breaking changes:
 New features:
 - Added Table.UpdateRow.
 - Added Table.GetRow.
+- Added Table.GetColumn.
 
 Bug fixes:
 - (None)

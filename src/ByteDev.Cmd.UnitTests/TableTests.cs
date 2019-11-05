@@ -250,5 +250,38 @@ namespace ByteDev.Cmd.UnitTests
                 Assert.That(result.Second(), Is.EqualTo("Y"));
             }
         }
+
+        [TestFixture]
+        public class GetColumn : TableTests
+        {
+            [Test]
+            public void WhenColumnPositionLessThanZero_ThenThrowException()
+            {
+                var sut = new Table(1, 2, "A");
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetColumn(-1));
+            }
+
+            [Test]
+            public void WhenColumnPositionGreaterOrEqualRows_ThenThrowException()
+            {
+                var sut = new Table(1, 2, "A");
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetColumn(2));
+            }
+
+            [Test]
+            public void WhenValidColumnPosition_ThenReturnColumn()
+            {
+                var sut = new Table(2, 2, "A");
+
+                sut.UpdateRow(new TablePosition(0, 1), new[] { "X", "Y" });
+
+                var result = sut.GetColumn(1);
+
+                Assert.That(result.First(), Is.EqualTo("A"));
+                Assert.That(result.Second(), Is.EqualTo("Y"));
+            }
+        }
     }
 }

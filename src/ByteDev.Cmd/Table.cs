@@ -160,7 +160,7 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Returns an entire table row.
         /// </summary>
-        /// <param name="rowNumber">Number of row to return. First row is number zero.</param>
+        /// <param name="rowNumber">The number of the row to return. First row is number zero.</param>
         /// <returns>Row at <paramref name="rowNumber" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
         public string[] GetRow(int rowNumber)
@@ -171,7 +171,25 @@ namespace ByteDev.Cmd
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"No row number: {rowNumber}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"No row exists at number: {rowNumber}. Position is outside the bounds of the table.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns an entire table column.
+        /// </summary>
+        /// <param name="columnNumber">The number of the column to return. First column is number zero.</param>
+        /// <returns>Column at <paramref name="columnNumber" />.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnNumber" /> is outside the bounds of the table.</exception>
+        public string[] GetColumn(int columnNumber)
+        {
+            try
+            {
+                return _cells.GetColumn(columnNumber);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new ArgumentOutOfRangeException($"No column exists at number: {columnNumber}. Position is outside the bounds of the table.", ex);
             }
         }
 
