@@ -18,12 +18,12 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Number of columns.
         /// </summary>
-        public int Columns => _cells.GetLength(0);
+        public int Columns => _cells.GetColumnCount();
 
         /// <summary>
         /// Number of rows.
         /// </summary>
-        public int Rows => _cells.GetLength(1);
+        public int Rows => _cells.GetRowCount();
         
         /// <summary>
         /// Padding to apply to the left of each table cell.

@@ -1,6 +1,17 @@
 # Release Notes
 
-## 3.0.0 - 05 Nov 2019
+## 3.0.1 - 05 November 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes:
+- Fix around retrieving Table rows and columns.
+
+## 3.0.0 - 05 November 2019
 
 Breaking changes:
 - Table GetValue is now GetCell
@@ -17,7 +28,7 @@ Bug fixes:
 - (None)
 
 
-## 2.1.0 - 04 Nov 2019
+## 2.1.0 - 04 November 2019
 
 Breaking changes:
 - (None)
@@ -32,7 +43,7 @@ New features:
 Bug fixes:
 - (None)
 
-## 2.0.0 - 21 Oct 2019
+## 2.0.0 - 21 October 2019
 
 Breaking changes:
 - Removed HelpText from CmdArgInfo, is now public extension method on IList<CmdAllowedArg>
@@ -43,7 +54,7 @@ New features:
 Bug fixes:
 - (None)
 
-## 1.2.0 - 19 Oct 2019
+## 1.2.0 - 19 October 2019
 
 Breaking changes:
 - (None)
@@ -56,7 +67,7 @@ Bug fixes:
 - (None)
 
 
-## 1.1.1 - 07 Oct 2019
+## 1.1.1 - 07 October 2019
 
 Breaking changes:
 - (None)
@@ -68,7 +79,7 @@ Bug fixes:
 - Fix so all public types now have XML documentation.
 
 
-## 1.1.0 - 06 Oct 2019
+## 1.1.0 - 06 October 2019
 
 Breaking changes:
 - (None)

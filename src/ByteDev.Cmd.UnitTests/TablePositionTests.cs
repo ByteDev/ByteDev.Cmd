@@ -10,19 +10,19 @@ namespace ByteDev.Cmd.UnitTests
         public class Constructor : TablePositionTests
         {
             [Test]
-            public void WhenXLessThanZero_ThenThrowException()
+            public void WhenColumnNumberLessThanZero_ThenThrowException()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => new TablePosition(-1, 0));
             }
 
             [Test]
-            public void WhenYLessThanZero_ThenThrowException()
+            public void WhenRowNumberLessThanZero_ThenThrowException()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => new TablePosition(0, -1));
             }
 
             [Test]
-            public void WhenXAndYValid_ThenSetProperties()
+            public void WhenColumnAndRowValid_ThenSetProperties()
             {
                 var sut = new TablePosition(0, 1);
 

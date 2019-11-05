@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace ByteDev.Cmd
 {
@@ -17,20 +18,32 @@ namespace ByteDev.Cmd
 
         public static TSource[] GetRow<TSource>(this TSource[,] source, int rowNumber)
         {
-            var rowCount = source.GetLength(1);
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
 
-            return Enumerable.Range(0, rowCount)
+            return Enumerable.Range(0, source.GetColumnCount())
                 .Select(e => source[e, rowNumber])
                 .ToArray();
         }
 
         public static TSource[] GetColumn<TSource>(this TSource[,] source, int columnNumber)
         {
-            var columnCount = source.GetLength(0);
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
 
-            return Enumerable.Range(0, columnCount)
+            return Enumerable.Range(0, source.GetRowCount())
                 .Select(e => source[columnNumber, e])
                 .ToArray();
+        }
+
+        public static int GetColumnCount<TSource>(this TSource[,] source)
+        {
+            return source.GetLength(0);
+        }
+
+        public static int GetRowCount<TSource>(this TSource[,] source)
+        {
+            return source.GetLength(1);
         }
     }
 }

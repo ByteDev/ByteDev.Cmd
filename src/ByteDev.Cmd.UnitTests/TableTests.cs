@@ -240,14 +240,18 @@ namespace ByteDev.Cmd.UnitTests
             [Test]
             public void WhenValidRowPosition_ThenReturnRow()
             {
-                var sut = new Table(2, 2, "A");
+                // A A A
+                // X Y Z
 
-                sut.UpdateRow(new TablePosition(0, 1), new []{ "X", "Y"});
+                var sut = new Table(3, 2, "A");
+
+                sut.UpdateRow(new TablePosition(0, 1), new []{ "X", "Y", "Z"});
 
                 var result = sut.GetRow(1);
 
                 Assert.That(result.First(), Is.EqualTo("X"));
                 Assert.That(result.Second(), Is.EqualTo("Y"));
+                Assert.That(result.Third(), Is.EqualTo("Z"));
             }
         }
 
@@ -273,9 +277,12 @@ namespace ByteDev.Cmd.UnitTests
             [Test]
             public void WhenValidColumnPosition_ThenReturnColumn()
             {
-                var sut = new Table(2, 2, "A");
+                // A A A
+                // X Y Z
 
-                sut.UpdateRow(new TablePosition(0, 1), new[] { "X", "Y" });
+                var sut = new Table(3, 2, "A");
+
+                sut.UpdateRow(new TablePosition(0, 1), new[] { "X", "Y", "Z" });
 
                 var result = sut.GetColumn(1);
 
