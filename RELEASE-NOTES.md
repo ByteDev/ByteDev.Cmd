@@ -1,6 +1,6 @@
 # Release Notes
 
-## 3.0.0 - ?
+## 3.0.0 - 05 Nov 2019
 
 Breaking changes:
 - Table GetValue is now GetCell
