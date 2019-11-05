@@ -18,12 +18,12 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Number of columns.
         /// </summary>
-        public int Columns { get; }
+        public int Columns => _cells.GetLength(0);
 
         /// <summary>
         /// Number of rows.
         /// </summary>
-        public int Rows { get; }
+        public int Rows => _cells.GetLength(1);
         
         /// <summary>
         /// Padding to apply to the left of each table cell.
@@ -54,7 +54,7 @@ namespace ByteDev.Cmd
         }
         
         /// <summary>
-        /// Color of each value inside the table.
+        /// Color of each cell value inside the table.
         /// </summary>
         public OutputColor ValueColor
         {
@@ -80,18 +80,16 @@ namespace ByteDev.Cmd
 
             _cells = new string[columns, rows];
 
-            Columns = columns;
-            Rows = rows;
-
             if (!string.IsNullOrEmpty(defaultValue))
                 _cells.Populate(defaultValue);
         }
-        
+
         /// <summary>
         /// Return a cell value based on its position.
         /// </summary>
         /// <param name="position">The position of the cell in the table.</param>
         /// <returns>The value at the <paramref name="position" />.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
         public string GetCell(TablePosition position)
         {
             try
@@ -109,6 +107,7 @@ namespace ByteDev.Cmd
         /// </summary>
         /// <param name="position">The position of the cell in the table.</param>
         /// <param name="value">The value to update with.</param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
         public void UpdateCell(TablePosition position, string value)
         {
             try
@@ -127,6 +126,7 @@ namespace ByteDev.Cmd
         /// <param name="position">The position of the first cell to update on the row.</param>
         /// <param name="values">The values to update the row with.</param>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
         public void UpdateRow(TablePosition position, string[] values)
         {
             if(values == null)
@@ -156,21 +156,37 @@ namespace ByteDev.Cmd
                 throw new ArgumentOutOfRangeException($"Cannot update value at row {col}x{position.Row}. Position is outside the bounds of the table.", ex);
             }
         }
-        
-        // TODO: string[] GetLine(int rowPosition)
 
-        internal string GetLineText(int rowPosition)
+        /// <summary>
+        /// Returns an entire table row.
+        /// </summary>
+        /// <param name="rowNumber">Number of row to return. First row is number zero.</param>
+        /// <returns>Row at <paramref name="rowNumber" />.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
+        public string[] GetRow(int rowNumber)
         {
-            if(rowPosition < 0 || rowPosition > Rows - 1)
-                throw new ArgumentOutOfRangeException(nameof(rowPosition), $"No row exists at position {rowPosition}.");
+            try
+            {
+                return _cells.GetRow(rowNumber);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new ArgumentOutOfRangeException($"No row number: {rowNumber}. Position is outside the bounds of the table.", ex);
+            }
+        }
 
-            var longestLength = GetLongestValueLength();
+        internal string GetRowText(int rowNumber)
+        {
+            if(rowNumber < 0 || rowNumber > Rows - 1)
+                throw new ArgumentOutOfRangeException(nameof(rowNumber), $"No row exists at position {rowNumber}.");
+
+            var longestLength = GetLongestElementLength();
 
             var sb = new StringBuilder();
 
             for (var colPosition = 0; colPosition < Columns; colPosition++)
             {
-                var value = _cells[colPosition, rowPosition] ?? string.Empty;
+                var value = _cells[colPosition, rowNumber] ?? string.Empty;
 
                 value = value.PadLeft(longestLength, ' ');
 
@@ -180,7 +196,7 @@ namespace ByteDev.Cmd
             return sb.ToString();
         }
 
-        internal int GetLongestValueLength()
+        internal int GetLongestElementLength()
         {
             var length = 0;
 

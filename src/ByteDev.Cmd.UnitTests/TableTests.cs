@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using ByteDev.Collections;
 using NUnit.Framework;
 
 namespace ByteDev.Cmd.UnitTests
@@ -116,6 +118,7 @@ namespace ByteDev.Cmd.UnitTests
                 _sut = new Table(2, 2, "A");
             }
             
+
             [Test]
             public void WhenValuesIsNull_ThenThrowException()
             {
@@ -212,6 +215,39 @@ namespace ByteDev.Cmd.UnitTests
                 Assert.That(sut.GetCell(new TablePosition(0, 2)), Is.EqualTo("A"));
                 Assert.That(sut.GetCell(new TablePosition(1, 2)), Is.EqualTo("A"));
                 Assert.That(sut.GetCell(new TablePosition(2, 2)), Is.EqualTo("A"));
+            }
+        }
+
+        [TestFixture]
+        public class GetRow : TableTests
+        {
+            [Test]
+            public void WhenRowPositionLessThanZero_ThenThrowException()
+            {
+                var sut = new Table(1, 2, "A");
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetRow(-1));
+            }
+
+            [Test]
+            public void WhenRowPositionGreaterOrEqualRows_ThenThrowException()
+            {
+                var sut = new Table(1, 2, "A");
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetRow(2));
+            }
+
+            [Test]
+            public void WhenValidRowPosition_ThenReturnRow()
+            {
+                var sut = new Table(2, 2, "A");
+
+                sut.UpdateRow(new TablePosition(0, 1), new []{ "X", "Y"});
+
+                var result = sut.GetRow(1);
+
+                Assert.That(result.First(), Is.EqualTo("X"));
+                Assert.That(result.Second(), Is.EqualTo("Y"));
             }
         }
     }

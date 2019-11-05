@@ -13,7 +13,7 @@ namespace ByteDev.Cmd
 
         public static string Create(Table table)
         {
-            var totalValueWidths = table.Columns * table.GetLongestValueLength();
+            var totalValueWidths = table.Columns * table.GetLongestElementLength();
 
             var totalPaddingsLength = (table.LeftPadding.Length + table.RightPadding.Length) * table.Columns;
 

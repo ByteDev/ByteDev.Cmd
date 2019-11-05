@@ -10,6 +10,7 @@ Breaking changes:
 
 New features:
 - Added Table.UpdateRow.
+- Added Table.GetRow.
 
 Bug fixes:
 - (None)

@@ -20,8 +20,8 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.TablePosition" /> class.
         /// </summary>
-        /// <param name="column">Column number position.</param>
-        /// <param name="row">Row number position.</param>
+        /// <param name="column">Column number position. First position is zero.</param>
+        /// <param name="row">Row number position. First position is zero.</param>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="column" /> cannot be less than zero.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="row" /> cannot be less than zero.</exception>
         public TablePosition(int column, int row)

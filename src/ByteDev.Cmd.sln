@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{CEA99A6B
 		..\build\build.cake = ..\build\build.cake
 		ByteDev.Cmd.nuspec = ByteDev.Cmd.nuspec
 		..\build\ByteDev.Utilities.cake = ..\build\ByteDev.Utilities.cake
+		..\build\nuspec.xsd = ..\build\nuspec.xsd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByteDev.Cmd.UnitTests", "ByteDev.Cmd.UnitTests\ByteDev.Cmd.UnitTests.csproj", "{EB3F4EB2-C1BB-436D-9298-48578F385368}"
