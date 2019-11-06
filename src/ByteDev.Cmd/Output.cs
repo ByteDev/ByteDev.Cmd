@@ -31,7 +31,9 @@ namespace ByteDev.Cmd
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the character.</param>
         public void Write(char c, OutputColor color)
         {
-            Write(c.ToString(), color);
+            ConsoleEx.SetColor(color);
+            Console.Write(c);
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -48,14 +50,10 @@ namespace ByteDev.Cmd
         /// </summary>
         /// <param name="text">The text to write to the console.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        /// /// <exception cref="T:System.ArgumentNullException"><paramref name="color" /> is null.</exception>
         public void Write(string text, OutputColor color)
         {
-            if (color == null)
-                throw new ArgumentNullException(nameof(color));
-
             ConsoleEx.SetColor(color);
-            Write(text);
+            Console.Write(text);
             Console.ResetColor();
         }
 
@@ -63,8 +61,12 @@ namespace ByteDev.Cmd
         /// Write a message box to the console.
         /// </summary>
         /// <param name="messageBox">The message box to write.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="messageBox" /> is null.</exception>
         public void Write(MessageBox messageBox)
         {
+            if(messageBox == null)
+                throw new ArgumentNullException(nameof(messageBox));
+
             var horizontalLine = HorizontalLineFactory.Create(messageBox);
             
             WriteLine(HorizontalLineFactory.CreateTop(horizontalLine, messageBox.BorderStyle), messageBox.BorderColor);
@@ -85,8 +87,12 @@ namespace ByteDev.Cmd
         /// Write a table to the console.
         /// </summary>
         /// <param name="table">The table to write.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="table" /> is null.</exception>
         public void Write(Table table)
         {
+            if(table == null)
+                throw new ArgumentNullException(nameof(table));
+
             var line = HorizontalLineFactory.Create(table);
 
             WriteLine(HorizontalLineFactory.CreateTop(line, table.BorderStyle), table.BorderColor);
@@ -142,12 +148,8 @@ namespace ByteDev.Cmd
         /// </summary>
         /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        /// <exception cref="T:System.ArgumentNullException"><paramref name="color" /> is null.</exception>
         public void WriteLine(string text, OutputColor color)
         {
-            if(color == null)
-                throw new ArgumentNullException(nameof(color));
-
             ConsoleEx.SetColor(color);
             WriteLine(text);
             Console.ResetColor();
@@ -274,9 +276,7 @@ namespace ByteDev.Cmd
         public void WriteBlankLines(int numberOfLines = 1)
         {
             for (var i = 0; i < numberOfLines; i++)
-            {
                 WriteLine();
-            }
         }
     }
 }

@@ -22,8 +22,8 @@ namespace ByteDev.Cmd
         /// </summary>
         public OutputColor TextColor
         {
-            get => _textColor;
-            set => _textColor = value ?? ConsoleEx.GetColor();
+            get => _textColor ?? (_textColor = ConsoleEx.GetColor());
+            set => _textColor = value;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace ByteDev.Cmd
         /// </summary>
         public OutputColor BorderColor
         {
-            get => _borderColor;
-            set => _borderColor = value ?? ConsoleEx.GetColor();
+            get => _borderColor ?? (_borderColor = ConsoleEx.GetColor());
+            set => _borderColor = value;
         }
 
         /// <summary>

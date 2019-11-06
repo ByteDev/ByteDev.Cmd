@@ -1,5 +1,18 @@
 # Release Notes
 
+## 3.1.0 - 06 November 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- Added CmdArgInfo.GetArgument(char).
+- Added CmdArgInfo.GetArgument(string).
+- Added Table.UpdateRow overload.
+
+Bug fixes:
+- Fixed null color handling.
+
 ## 3.0.1 - 05 November 2019
 
 Breaking changes:

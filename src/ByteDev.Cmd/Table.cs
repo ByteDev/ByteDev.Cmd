@@ -123,6 +123,18 @@ namespace ByteDev.Cmd
         /// <summary>
         /// Update all the cell values on a particular row.
         /// </summary>
+        /// <param name="rowNumber">The row to update on the row.</param>
+        /// <param name="values">The values to update the row with.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
+        public void UpdateRow(int rowNumber, string[] values)
+        {
+            UpdateRow(new TablePosition(0, rowNumber), values);
+        }
+
+        /// <summary>
+        /// Update all the cell values on a particular row.
+        /// </summary>
         /// <param name="position">The position of the first cell to update on the row.</param>
         /// <param name="values">The values to update the row with.</param>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>

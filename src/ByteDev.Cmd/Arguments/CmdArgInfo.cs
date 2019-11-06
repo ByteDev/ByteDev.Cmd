@@ -50,6 +50,26 @@ namespace ByteDev.Cmd.Arguments
             AddArguments(inputArgs);
         }
 
+        /// <summary>
+        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its short name.
+        /// </summary>
+        /// <param name="name">The short name of the argument.</param>
+        /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the short name; otherwise null.</returns>
+        public CmdArg GetArgument(char name)
+        {
+            return Arguments.SingleOrDefault(a => a.ShortName == name);
+        }
+
+        /// <summary>
+        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its long name.
+        /// </summary>
+        /// <param name="name">The long name of the argument.</param>
+        /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the long name; otherwise null.</returns>
+        public CmdArg GetArgument(string name)
+        {
+            return Arguments.SingleOrDefault(a => a.LongName == name);
+        }
+        
         private void AddArguments(IEnumerable<string> inputArgs)
         {
             string currentName = null;
