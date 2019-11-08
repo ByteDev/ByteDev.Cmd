@@ -5,10 +5,10 @@ using NUnit.Framework;
 namespace ByteDev.Cmd.UnitTests.Tables
 {
     [TestFixture]
-    public class TablePositionTests
+    public class CellPositionTests
     {
         [TestFixture]
-        public class Constructor : TablePositionTests
+        public class Constructor : CellPositionTests
         {
             [Test]
             public void WhenColumnNumberLessThanZero_ThenThrowException()
@@ -33,7 +33,7 @@ namespace ByteDev.Cmd.UnitTests.Tables
         }
 
         [TestFixture]
-        public class ToStringOverride : TablePositionTests
+        public class ToStringOverride : CellPositionTests
         {
             [Test]
             public void WhenCalled_ThenReturnsStringRepresentation()
