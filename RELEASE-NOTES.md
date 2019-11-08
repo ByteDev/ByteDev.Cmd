@@ -1,6 +1,6 @@
 # Release Notes
 
-## 4.0.0 - ?
+## 4.0.0 - 08 November 2019
 
 Breaking changes:
 - Table classes now under ByteDev.Cmd.Tables namespace.
