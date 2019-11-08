@@ -1,5 +1,5 @@
 ﻿using System;
-using ByteDev.Cmd.Borders;
+using ByteDev.Cmd.Tables.Borders;
 
 namespace ByteDev.Cmd
 {

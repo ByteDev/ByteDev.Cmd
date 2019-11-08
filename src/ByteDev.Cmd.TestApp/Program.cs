@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ByteDev.Cmd.Arguments;
-using ByteDev.Cmd.Borders;
 using ByteDev.Cmd.Logging;
+using ByteDev.Cmd.Tables;
+using ByteDev.Cmd.Tables.Borders;
 
 namespace ByteDev.Cmd.TestApp
 {
@@ -156,17 +157,18 @@ namespace ByteDev.Cmd.TestApp
         {
             var table = new Table(3, 3)
             {
+                BorderStyle = new BorderSimple(),
                 BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue),
                 ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
             };
 
-            table.UpdateCell(new TablePosition(0, 0), "A111");
+            table.UpdateCell(new CellPosition(0, 0), "A111");
 
-            table.UpdateCell(new TablePosition(0, 1), "B1");
-            table.UpdateCell(new TablePosition(1, 1), "B2");
-            table.UpdateCell(new TablePosition(2, 1), "B3");
+            table.UpdateCell(new CellPosition(0, 1), "B1");
+            table.UpdateCell(new CellPosition(1, 1), "B2");
+            table.UpdateCell(new CellPosition(2, 1), "B3");
 
-            table.UpdateCell(new TablePosition(2, 2), "C3");
+            table.UpdateCell(new CellPosition(2, 2), "C3");
             
             return table;
         }

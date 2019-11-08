@@ -1,4 +1,5 @@
 ﻿using System;
+using ByteDev.Cmd.Tables;
 
 namespace ByteDev.Cmd
 {

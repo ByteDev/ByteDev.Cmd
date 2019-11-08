@@ -1,5 +1,17 @@
 # Release Notes
 
+## 4.0.0 - ?
+
+Breaking changes:
+- Table classes now under ByteDev.Cmd.Tables namespace.
+- TablePosition is now CellPosition.
+
+New features:
+- Added new border style.
+
+Bug fixes:
+- (None)
+
 ## 3.1.0 - 06 November 2019
 
 Breaking changes:

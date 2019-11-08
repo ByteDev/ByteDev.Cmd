@@ -1,4 +1,6 @@
-﻿namespace ByteDev.Cmd
+﻿using ByteDev.Cmd.Tables;
+
+namespace ByteDev.Cmd
 {
     /// <summary>
     /// Represents a interface for writing text to the console.

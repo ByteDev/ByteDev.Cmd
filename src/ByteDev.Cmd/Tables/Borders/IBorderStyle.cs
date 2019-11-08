@@ -1,4 +1,4 @@
-﻿namespace ByteDev.Cmd.Borders
+﻿namespace ByteDev.Cmd.Tables.Borders
 {
     /// <summary>
     /// Represents a style of border to use when writing output.

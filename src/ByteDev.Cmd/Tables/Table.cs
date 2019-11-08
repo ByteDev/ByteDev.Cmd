@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using ByteDev.Cmd.Borders;
+using ByteDev.Cmd.Tables.Borders;
 
-namespace ByteDev.Cmd
+namespace ByteDev.Cmd.Tables
 {
     /// <summary>
     /// Represents a console table.
@@ -63,7 +63,7 @@ namespace ByteDev.Cmd
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Table" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Tables.Table" /> class.
         /// </summary>
         /// <param name="columns">Number of columns.</param>
         /// <param name="rows">Number of rows.</param>
@@ -90,7 +90,7 @@ namespace ByteDev.Cmd
         /// <param name="position">The position of the cell in the table.</param>
         /// <returns>The value at the <paramref name="position" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public string GetCell(TablePosition position)
+        public string GetCell(CellPosition position)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace ByteDev.Cmd
         /// <param name="position">The position of the cell in the table.</param>
         /// <param name="value">The value to update with.</param>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public void UpdateCell(TablePosition position, string value)
+        public void UpdateCell(CellPosition position, string value)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace ByteDev.Cmd
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
         public void UpdateRow(int rowNumber, string[] values)
         {
-            UpdateRow(new TablePosition(0, rowNumber), values);
+            UpdateRow(new CellPosition(0, rowNumber), values);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace ByteDev.Cmd
         /// <param name="values">The values to update the row with.</param>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public void UpdateRow(TablePosition position, string[] values)
+        public void UpdateRow(CellPosition position, string[] values)
         {
             if(values == null)
                 throw new ArgumentNullException(nameof(values));
