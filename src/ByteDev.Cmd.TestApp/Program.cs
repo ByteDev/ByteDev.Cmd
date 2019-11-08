@@ -162,13 +162,13 @@ namespace ByteDev.Cmd.TestApp
                 ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
             };
 
-            table.UpdateCell(new CellPosition(0, 0), "A111");
+            table.UpdateCell(new CellPosition(0, 0), new Cell("A111") { ValueColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.White)});
 
-            table.UpdateCell(new CellPosition(0, 1), "B1");
-            table.UpdateCell(new CellPosition(1, 1), "B2");
-            table.UpdateCell(new CellPosition(2, 1), "B3");
+            table.UpdateCell(new CellPosition(0, 1), new Cell("B1"));
+            table.UpdateCell(new CellPosition(1, 1), new Cell("B2"));
+            table.UpdateCell(new CellPosition(2, 1), new Cell("B3"));
 
-            table.UpdateCell(new CellPosition(2, 2), "C3");
+            table.UpdateCell(new CellPosition(2, 2), new Cell("C3"));
             
             return table;
         }

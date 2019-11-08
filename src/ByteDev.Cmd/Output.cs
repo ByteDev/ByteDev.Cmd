@@ -98,11 +98,9 @@ namespace ByteDev.Cmd
 
             WriteLine(HorizontalLineFactory.CreateTop(line, table.BorderStyle), table.BorderColor);
 
-            for (var row=0; row < table.Rows; row++)
+            for (var rowNumber=0; rowNumber < table.Rows; rowNumber++)
             {
-                Write(table.BorderStyle.VerticalLine, table.BorderColor);
-                Write(table.GetRowText(row), table.ValueColor);
-                WriteLine(table.BorderStyle.VerticalLine, table.BorderColor);
+                WriteTableRow(table, rowNumber);
             }
             
             WriteLine(HorizontalLineFactory.CreateBottom(line, table.BorderStyle), table.BorderColor);
@@ -278,6 +276,24 @@ namespace ByteDev.Cmd
         {
             for (var i = 0; i < numberOfLines; i++)
                 WriteLine();
+        }
+
+        private void WriteTableRow(Table table, int rowNumber)
+        {
+            Write(table.BorderStyle.VerticalLine, table.BorderColor);
+
+            var longestValue = table.GetLongestCellValueLength();
+
+            for (var colNumber = 0; colNumber < table.Columns; colNumber++)
+            {
+                var cell = table.GetCell(new CellPosition(colNumber, rowNumber)) ?? new Cell();
+
+                var valueFormatted = cell.ToStringFormatted(longestValue, table.LeftPadding, table.RightPadding);
+
+                Write(valueFormatted, cell.ValueColor ?? table.ValueColor);
+            }
+
+            WriteLine(table.BorderStyle.VerticalLine, table.BorderColor);
         }
     }
 }

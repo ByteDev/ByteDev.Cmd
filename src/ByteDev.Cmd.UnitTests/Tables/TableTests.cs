@@ -38,8 +38,8 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var sut = new Table(2, 1, "A");
 
-                Assert.That(sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("A"));
             }
         }
 
@@ -81,7 +81,7 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new CellPosition(2, 0), "A"));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new CellPosition(2, 0), new Cell("A")));
             }
 
 
@@ -90,7 +90,7 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var sut = new Table(2, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new CellPosition(0, 2), "A"));
+                Assert.Throws<ArgumentOutOfRangeException>(() => sut.UpdateCell(new CellPosition(0, 2), new Cell("A")));
             }
 
             [Test]
@@ -99,12 +99,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
                 var sut = new Table(2, 2, "A");
                 var position = new CellPosition(0, 0);
 
-                sut.UpdateCell(position, "X");
+                sut.UpdateCell(position, new Cell("X"));
 
-                Assert.That(sut.GetCell(position), Is.EqualTo("X"));
-                Assert.That(sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(position).Value, Is.EqualTo("X"));
+                Assert.That(sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
             }
         }
 
@@ -133,7 +133,7 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(0, 2);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { "X", "Y" }));
+                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { new Cell("X"), new Cell("Y") }));
             }
 
             [Test]
@@ -141,7 +141,7 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(2, 0);
 
-                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { "X", "Y" }));
+                Assert.Throws<ArgumentOutOfRangeException>(() => _sut.UpdateRow(position, new[] { new Cell("X"), new Cell("Y") }));
             }
 
             [Test]
@@ -149,12 +149,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(0, 0);
 
-                _sut.UpdateRow(position, new string[0]);
+                _sut.UpdateRow(position, new Cell[0]);
 
-                Assert.That(_sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
             }
 
             [Test]
@@ -162,12 +162,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(0, 0);
 
-                _sut.UpdateRow(position, new []{ "X", "Y" });
+                _sut.UpdateRow(position, new []{ new Cell("X"), new Cell("Y") });
 
-                Assert.That(_sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("X"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("Y"));
-                Assert.That(_sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("Y"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
             }
 
             [Test]
@@ -175,12 +175,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(0, 0);
 
-                _sut.UpdateRow(position, new[] { "X" });
+                _sut.UpdateRow(position, new[] { new Cell("X") });
 
-                Assert.That(_sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("X"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
             }
 
             [Test]
@@ -188,12 +188,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
             {
                 var position = new CellPosition(0, 0);
 
-                _sut.UpdateRow(position, new[] { "X", "Y", "Z" });
+                _sut.UpdateRow(position, new[] { new Cell("X"), new Cell("Y"), new Cell("Z") });
 
-                Assert.That(_sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("X"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("Y"));
-                Assert.That(_sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(_sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("X"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("Y"));
+                Assert.That(_sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(_sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
             }
 
             [Test]
@@ -203,19 +203,19 @@ namespace ByteDev.Cmd.UnitTests.Tables
 
                 var position = new CellPosition(1, 0);
 
-                sut.UpdateRow(position, new[] { "X", "Y" });
+                sut.UpdateRow(position, new[] { new Cell("X"), new Cell("Y") });
 
-                Assert.That(sut.GetCell(new CellPosition(0, 0)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 0)), Is.EqualTo("X"));
-                Assert.That(sut.GetCell(new CellPosition(2, 0)), Is.EqualTo("Y"));
+                Assert.That(sut.GetCell(new CellPosition(0, 0)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 0)).Value, Is.EqualTo("X"));
+                Assert.That(sut.GetCell(new CellPosition(2, 0)).Value, Is.EqualTo("Y"));
 
-                Assert.That(sut.GetCell(new CellPosition(0, 1)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 1)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(2, 1)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(0, 1)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 1)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(2, 1)).Value, Is.EqualTo("A"));
 
-                Assert.That(sut.GetCell(new CellPosition(0, 2)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(1, 2)), Is.EqualTo("A"));
-                Assert.That(sut.GetCell(new CellPosition(2, 2)), Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(0, 2)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(1, 2)).Value, Is.EqualTo("A"));
+                Assert.That(sut.GetCell(new CellPosition(2, 2)).Value, Is.EqualTo("A"));
             }
         }
 
@@ -246,13 +246,13 @@ namespace ByteDev.Cmd.UnitTests.Tables
 
                 var sut = new Table(3, 2, "A");
 
-                sut.UpdateRow(new CellPosition(0, 1), new []{ "X", "Y", "Z"});
+                sut.UpdateRow(new CellPosition(0, 1), new []{ new Cell("X"), new Cell("Y"), new Cell("Z") });
 
                 var result = sut.GetRow(1);
 
-                Assert.That(result.First(), Is.EqualTo("X"));
-                Assert.That(result.Second(), Is.EqualTo("Y"));
-                Assert.That(result.Third(), Is.EqualTo("Z"));
+                Assert.That(result.First().Value, Is.EqualTo("X"));
+                Assert.That(result.Second().Value, Is.EqualTo("Y"));
+                Assert.That(result.Third().Value, Is.EqualTo("Z"));
             }
         }
 
@@ -283,12 +283,12 @@ namespace ByteDev.Cmd.UnitTests.Tables
 
                 var sut = new Table(3, 2, "A");
 
-                sut.UpdateRow(new CellPosition(0, 1), new[] { "X", "Y", "Z" });
+                sut.UpdateRow(new CellPosition(0, 1), new[] { new Cell("X"), new Cell("Y"), new Cell("Z") });
 
                 var result = sut.GetColumn(1);
 
-                Assert.That(result.First(), Is.EqualTo("A"));
-                Assert.That(result.Second(), Is.EqualTo("Y"));
+                Assert.That(result.First().Value, Is.EqualTo("A"));
+                Assert.That(result.Second().Value, Is.EqualTo("Y"));
             }
         }
     }

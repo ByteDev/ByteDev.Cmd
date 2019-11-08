@@ -8,6 +8,7 @@ Breaking changes:
 
 New features:
 - Added new border style.
+- Added Cell (Table now holds Cells type not strings)
 
 Bug fixes:
 - (None)

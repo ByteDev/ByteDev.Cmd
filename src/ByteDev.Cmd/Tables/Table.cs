@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using ByteDev.Cmd.Tables.Borders;
 
 namespace ByteDev.Cmd.Tables
@@ -9,7 +8,7 @@ namespace ByteDev.Cmd.Tables
     /// </summary>
     public class Table
     {
-        private readonly string[,] _cells;
+        private readonly Cell[,] _cells;
 
         private IBorderStyle _borderStyle;
         private OutputColor _borderColor;
@@ -24,7 +23,7 @@ namespace ByteDev.Cmd.Tables
         /// Number of rows.
         /// </summary>
         public int Rows => _cells.GetRowCount();
-        
+
         /// <summary>
         /// Padding to apply to the left of each table cell.
         /// </summary>
@@ -54,7 +53,7 @@ namespace ByteDev.Cmd.Tables
         }
         
         /// <summary>
-        /// Color of each cell value inside the table.
+        /// Default color information for each <see cref="T:ByteDev.Cmd.Tables.Cell" /> inside the table.
         /// </summary>
         public OutputColor ValueColor
         {
@@ -78,10 +77,10 @@ namespace ByteDev.Cmd.Tables
             if (rows < 1)
                 throw new ArgumentOutOfRangeException(nameof(rows), rows, "Rows cannot be less than one.");
 
-            _cells = new string[columns, rows];
+            _cells = new Cell[columns, rows];
 
-            if (!string.IsNullOrEmpty(defaultValue))
-                _cells.Populate(defaultValue);
+            if (defaultValue != null)
+                _cells.Populate(new Cell(defaultValue));
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace ByteDev.Cmd.Tables
         /// <param name="position">The position of the cell in the table.</param>
         /// <returns>The value at the <paramref name="position" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public string GetCell(CellPosition position)
+        public Cell GetCell(CellPosition position)
         {
             try
             {
@@ -98,7 +97,7 @@ namespace ByteDev.Cmd.Tables
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"Cannot retrieve cell value at position {position}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"Cannot retrieve cell at position {position}. Position is outside the bounds of the table.", ex);
             }
         }
 
@@ -106,66 +105,66 @@ namespace ByteDev.Cmd.Tables
         /// Update a cell's value at a certain position in the table.
         /// </summary>
         /// <param name="position">The position of the cell in the table.</param>
-        /// <param name="value">The value to update with.</param>
+        /// <param name="cell">The cell to update with.</param>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public void UpdateCell(CellPosition position, string value)
+        public void UpdateCell(CellPosition position, Cell cell)
         {
             try
             {
-                _cells[position.Column, position.Row] = value;
+                _cells[position.Column, position.Row] = cell;
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"Cannot update value at position {position}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"Cannot update cell at position {position}. Position is outside the bounds of the table.", ex);
             }
         }
 
         /// <summary>
-        /// Update all the cell values on a particular row.
+        /// Update all the cells on a particular row.
         /// </summary>
-        /// <param name="rowNumber">The row to update on the row.</param>
-        /// <param name="values">The values to update the row with.</param>
-        /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
+        /// <param name="rowNumber">The row number to update.</param>
+        /// <param name="cells">The cells to update the row with.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="cells" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
-        public void UpdateRow(int rowNumber, string[] values)
+        public void UpdateRow(int rowNumber, Cell[] cells)
         {
-            UpdateRow(new CellPosition(0, rowNumber), values);
+            UpdateRow(new CellPosition(0, rowNumber), cells);
         }
 
         /// <summary>
         /// Update all the cell values on a particular row.
         /// </summary>
         /// <param name="position">The position of the first cell to update on the row.</param>
-        /// <param name="values">The values to update the row with.</param>
-        /// <exception cref="T:System.ArgumentNullException"><paramref name="values" /> is null.</exception>
+        /// <param name="cells">The cells to update the row with.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="cells" /> is null.</exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="position" /> is outside the bounds of the table.</exception>
-        public void UpdateRow(CellPosition position, string[] values)
+        public void UpdateRow(CellPosition position, Cell[] cells)
         {
-            if(values == null)
-                throw new ArgumentNullException(nameof(values));
+            if(cells == null)
+                throw new ArgumentNullException(nameof(cells));
 
             if(position.Column >= Columns)
-                throw new ArgumentOutOfRangeException($"Cannot update value at row {position}. Position is outside the bounds of the table.");
+                throw new ArgumentOutOfRangeException($"Cannot update cell at row {position}. Position is outside the bounds of the table.");
 
             var col = position.Column;
-            var valuesIndex = 0;
+            var cellIndex = 0;
 
             try
             {
                 while (col < Columns)
                 {
-                    if (valuesIndex >= values.Length)
+                    if (cellIndex >= cells.Length)
                         return;
 
-                    _cells[col, position.Row] = values[valuesIndex];
+                    _cells[col, position.Row] = cells[cellIndex];
 
                     col++;
-                    valuesIndex++;
+                    cellIndex++;
                 }
             }
             catch (IndexOutOfRangeException ex)
             {
-                throw new ArgumentOutOfRangeException($"Cannot update value at row {col}x{position.Row}. Position is outside the bounds of the table.", ex);
+                throw new ArgumentOutOfRangeException($"Cannot update cell at row {col}x{position.Row}. Position is outside the bounds of the table.", ex);
             }
         }
 
@@ -175,7 +174,7 @@ namespace ByteDev.Cmd.Tables
         /// <param name="rowNumber">The number of the row to return. First row is number zero.</param>
         /// <returns>Row at <paramref name="rowNumber" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowNumber" /> is outside the bounds of the table.</exception>
-        public string[] GetRow(int rowNumber)
+        public Cell[] GetRow(int rowNumber)
         {
             try
             {
@@ -193,7 +192,7 @@ namespace ByteDev.Cmd.Tables
         /// <param name="columnNumber">The number of the column to return. First column is number zero.</param>
         /// <returns>Column at <paramref name="columnNumber" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnNumber" /> is outside the bounds of the table.</exception>
-        public string[] GetColumn(int columnNumber)
+        public Cell[] GetColumn(int columnNumber)
         {
             try
             {
@@ -205,35 +204,14 @@ namespace ByteDev.Cmd.Tables
             }
         }
 
-        internal string GetRowText(int rowNumber)
-        {
-            if(rowNumber < 0 || rowNumber > Rows - 1)
-                throw new ArgumentOutOfRangeException(nameof(rowNumber), $"No row exists at position {rowNumber}.");
-
-            var longestLength = GetLongestElementLength();
-
-            var sb = new StringBuilder();
-
-            for (var colPosition = 0; colPosition < Columns; colPosition++)
-            {
-                var value = _cells[colPosition, rowNumber] ?? string.Empty;
-
-                value = value.PadLeft(longestLength, ' ');
-
-                sb.Append($"{LeftPadding}{value}{RightPadding}");
-            }
-
-            return sb.ToString();
-        }
-
-        internal int GetLongestElementLength()
+        internal int GetLongestCellValueLength()
         {
             var length = 0;
 
             foreach (var cell in _cells)
             {
-                if (cell != null && cell.Length > length)
-                    length = cell.Length;
+                if (cell != null && cell.Value.Length > length)
+                    length = cell.Value.Length;
             }
 
             return length;
