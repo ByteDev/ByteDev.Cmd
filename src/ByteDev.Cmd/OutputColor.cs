@@ -21,8 +21,7 @@ namespace ByteDev.Cmd
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.OutputColor" /> class.
         /// </summary>
         /// <param name="foregroundColor">The output foreground color.</param>
-        public OutputColor(ConsoleColor foregroundColor) :
-            this(foregroundColor, ConsoleColor.Black)
+        public OutputColor(ConsoleColor foregroundColor) : this(foregroundColor, ConsoleColor.Black)
         {
         }
 
@@ -31,8 +30,7 @@ namespace ByteDev.Cmd
         /// </summary>
         /// <param name="foregroundColor">The output foreground color.</param>
         /// <param name="backgroundColor">The output background color.</param>
-        public OutputColor(ConsoleColor foregroundColor,
-            ConsoleColor backgroundColor)
+        public OutputColor(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;

@@ -23,7 +23,7 @@ namespace ByteDev.Cmd.Arguments
         public bool HasArguments => Arguments.Count > 0;
 
         /// <summary>
-        /// The input command line arguments that are allowed.
+        /// The input command line arguments.
         /// </summary>
         public IList<CmdArg> Arguments
         {
@@ -53,21 +53,21 @@ namespace ByteDev.Cmd.Arguments
         /// <summary>
         /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its short name.
         /// </summary>
-        /// <param name="name">The short name of the argument.</param>
+        /// <param name="shortName">The short name of the argument.</param>
         /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the short name; otherwise null.</returns>
-        public CmdArg GetArgument(char name)
+        public CmdArg GetArgument(char shortName)
         {
-            return Arguments.SingleOrDefault(a => a.ShortName == name);
+            return Arguments.SingleOrDefault(a => a.ShortName == shortName);
         }
 
         /// <summary>
         /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its long name.
         /// </summary>
-        /// <param name="name">The long name of the argument.</param>
+        /// <param name="longName">The long name of the argument.</param>
         /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the long name; otherwise null.</returns>
-        public CmdArg GetArgument(string name)
+        public CmdArg GetArgument(string longName)
         {
-            return Arguments.SingleOrDefault(a => a.LongName == name);
+            return Arguments.SingleOrDefault(a => a.LongName == longName);
         }
         
         private void AddArguments(IEnumerable<string> inputArgs)
