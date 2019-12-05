@@ -1,4 +1,5 @@
-﻿using ByteDev.Cmd.Tables;
+﻿using ByteDev.Cmd.Lists;
+using ByteDev.Cmd.Tables;
 
 namespace ByteDev.Cmd
 {
@@ -37,7 +38,19 @@ namespace ByteDev.Cmd
         /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
         void Write(string text, OutputColor color);
-        
+
+        /// <summary>
+        /// Write an unordered list to the console.
+        /// </summary>
+        /// <param name="unorderedList">The unordered list to write to console.</param>
+        void Write(UnorderedList unorderedList);
+
+        /// <summary>
+        /// Write an ordered list to the console.
+        /// </summary>
+        /// <param name="orderedList">The ordered list to write to the console.</param>
+        void Write(OrderedList orderedList);
+
         /// <summary>
         /// Write a message box to the console.
         /// </summary>
@@ -80,15 +93,15 @@ namespace ByteDev.Cmd
         /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
         void WriteLine(string text, OutputColor color);
-        
+
         /// <summary>
-        /// Write a line of text in the default rainbow colors.
+        /// Write a line of text changing the color of each character.
         /// </summary>
         /// <param name="text">The text to be written.</param>
         void WriteRainbowLine(string text);
 
         /// <summary>
-        /// Write a line of text in the default rainbow colors.
+        /// Write a line of text changing the color of each character to the respective color in <paramref name="colors" />.
         /// </summary>
         /// <param name="text">The text to be written.</param>
         /// <param name="colors">Array of <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing out each character of the text.</param>

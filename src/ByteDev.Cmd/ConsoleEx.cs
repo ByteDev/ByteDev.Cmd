@@ -11,11 +11,8 @@ namespace ByteDev.Cmd
 
         public static void SetColor(OutputColor color)
         {
-            if (color != null)
-            {
-                Console.ForegroundColor = color.ForegroundColor;
-                Console.BackgroundColor = color.BackgroundColor;
-            }
+            Console.ForegroundColor = color.ForegroundColor;
+            Console.BackgroundColor = color.BackgroundColor;
         }
     }
 }

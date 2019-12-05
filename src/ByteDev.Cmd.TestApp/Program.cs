@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ByteDev.Cmd.Arguments;
+using ByteDev.Cmd.Lists;
 using ByteDev.Cmd.Logging;
 using ByteDev.Cmd.Tables;
 using ByteDev.Cmd.Tables.Borders;
@@ -21,7 +22,8 @@ namespace ByteDev.Cmd.TestApp
                 new CmdAllowedArg('o', false) {LongName = "output", Description = "Test output"},
                 new CmdAllowedArg('m', false) {LongName = "messagebox", Description = "Test message box"},
                 new CmdAllowedArg('l', false) {LongName = "logger", Description = "Test logger"},
-                new CmdAllowedArg('t', false) {LongName = "table", Description = "Test table"}
+                new CmdAllowedArg('t', false) {LongName = "table", Description = "Test table"},
+                new CmdAllowedArg('i', false) {LongName = "lists", Description = "Test Lists"}
             };
 
             try
@@ -49,6 +51,10 @@ namespace ByteDev.Cmd.TestApp
                             case 't':
                                 TestTable();
                                 break;
+
+                            case 'i':
+                                TestLists();
+                                break;
                         }
                     }
                 }
@@ -64,6 +70,30 @@ namespace ByteDev.Cmd.TestApp
             }
             
             Prompt.PressAnyKey();
+        }
+
+        private static void TestLists()
+        {
+            Output.WriteLine();
+            Output.WriteLine("***** Testing Lists *****");
+            Output.WriteLine();
+
+            var ul = new UnorderedList(new [] { "Item 1", "Item 2", "Item 3" })
+            {
+                ItemPrefix = "* ",
+                ItemColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.Gray)
+            };
+            Output.Write(ul);
+
+            Output.WriteLine();
+
+            var ol = new OrderedList(new[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12" })
+            {
+                ItemStartingNumber = 0,
+                ItemColor = new OutputColor(ConsoleColor.Black, ConsoleColor.Yellow),
+                ApplyItemNumberPadding = true
+            };
+            Output.Write(ol);
         }
 
         private static void TestOutput()
@@ -95,7 +125,7 @@ namespace ByteDev.Cmd.TestApp
             Output.WriteAlignLeft("Aligned Left (no color)");
             Output.WriteAlignRight("Aligned Right (no color)");
             Output.WriteAlignCenter("Aligned Center (no color)");
-            Output.WriteAlignToSides("Left Bit (no color)", "Right Bit (no color)", new OutputColor(ConsoleColor.Black, ConsoleColor.Gray));
+            Output.WriteAlignToSides("Left Bit (no color)", "Right Bit (no color)");
             Output.WriteLine();
 
             Output.WriteLine("Writing 3 blank lines...");

@@ -1,5 +1,18 @@
 # Release Notes
 
+## 4.1.0 - 05 December 2019
+
+Breaking changes:
+- (None)
+
+New features:
+- Added Output.Write for UnorderedList.
+- Added Output.Write for OrderedList.
+
+Bug fixes:
+- OutputColor now uses Console.BackgroundColor if not specified.
+- Changed internal rainbow color set.
+
 ## 4.0.0 - 08 November 2019
 
 Breaking changes:

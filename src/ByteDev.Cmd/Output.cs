@@ -1,4 +1,5 @@
 ﻿using System;
+using ByteDev.Cmd.Lists;
 using ByteDev.Cmd.Tables;
 
 namespace ByteDev.Cmd
@@ -32,9 +33,16 @@ namespace ByteDev.Cmd
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the character.</param>
         public void Write(char c, OutputColor color)
         {
-            ConsoleEx.SetColor(color);
-            Console.Write(c);
-            Console.ResetColor();
+            if (color == null)
+            {
+                Console.Write(c);
+            }
+            else
+            {
+                ConsoleEx.SetColor(color);
+                Console.Write(c);
+                Console.ResetColor();
+            }
         }
 
         /// <summary>
@@ -53,9 +61,47 @@ namespace ByteDev.Cmd
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
         public void Write(string text, OutputColor color)
         {
-            ConsoleEx.SetColor(color);
-            Console.Write(text);
-            Console.ResetColor();
+            if (color == null)
+            {
+                Console.Write(text);
+            }
+            else
+            {
+                ConsoleEx.SetColor(color);
+                Console.Write(text);
+                Console.ResetColor();
+            }
+        }
+
+        /// <summary>
+        /// Write an unordered list to the console.
+        /// </summary>
+        /// <param name="unorderedList">The unordered list to write to console.</param>
+        public void Write(UnorderedList unorderedList)
+        {
+            if(unorderedList == null)
+                throw new ArgumentNullException(nameof(unorderedList));
+
+            foreach (var item in unorderedList.Items)
+                WriteLine($"{unorderedList.ItemPrefix}{item}", unorderedList.ItemColor);
+        }
+
+        /// <summary>
+        /// Write an ordered list to the console.
+        /// </summary>
+        /// <param name="orderedList">The ordered list to write to the console.</param>
+        public void Write(OrderedList orderedList)
+        {
+            if(orderedList == null)
+                throw new ArgumentNullException(nameof(orderedList));
+
+            var counter = orderedList.ItemStartingNumber;
+
+            foreach (var item in orderedList.Items)
+            {
+                WriteLine($"{orderedList.GetNumberFormatted(counter)}{orderedList.ItemNumberDelimiter}{item}", orderedList.ItemColor);
+                counter++;
+            }
         }
 
         /// <summary>
@@ -149,13 +195,20 @@ namespace ByteDev.Cmd
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
         public void WriteLine(string text, OutputColor color)
         {
-            ConsoleEx.SetColor(color);
-            WriteLine(text);
-            Console.ResetColor();
+            if (color == null)
+            {
+                Console.WriteLine(text);
+            }
+            else
+            {
+                ConsoleEx.SetColor(color);
+                Console.WriteLine(text);
+                Console.ResetColor();
+            }
         }
 
         /// <summary>
-        /// Write a line of text in the default rainbow colors.
+        /// Write a line of text changing the color of each character.
         /// </summary>
         /// <param name="text">The text to be written.</param>
         public void WriteRainbowLine(string text)
@@ -164,15 +217,15 @@ namespace ByteDev.Cmd
             {
                 new OutputColor(ConsoleColor.Red),
                 new OutputColor(ConsoleColor.Yellow),
-                new OutputColor(ConsoleColor.Blue),
-                new OutputColor(ConsoleColor.White)
+                new OutputColor(ConsoleColor.Green),
+                new OutputColor(ConsoleColor.Blue)
             };
 
             WriteRainbowLine(text, defaultRainbowColors);
         }
 
         /// <summary>
-        /// Write a line of text in the default rainbow colors.
+        /// Write a line of text changing the color of each character to the respective color in <paramref name="colors" />.
         /// </summary>
         /// <param name="text">The text to be written.</param>
         /// <param name="colors">Array of <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing out each character of the text.</param>
