@@ -23,6 +23,12 @@ The repo can be cloned from git bash:
 
 A test console application (ByteDev.Cmd.TestApp) is provided for testing and usage examples.
 
+## Release Notes
+
+Releases follow semantic versioning.
+
+Full details of the release notes can be viewed on [GitHub](https://github.com/ByteDev/ByteDev.Cmd/blob/master/docs/RELEASE-NOTES.md).
+
 ## Usage
 
 Public classes provided include Output, Logger, MessageBox, Keyboard, Prompt.  The library also contains a namespace for handling input console arguments.
