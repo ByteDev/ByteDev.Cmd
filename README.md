@@ -3,7 +3,7 @@
 
 # ByteDev.Cmd
 
-Library providing functionality to help when writing output from a .NET Console application.
+Library providing functionality to help when creating .NET Console applications.
 
 ## Installation
 
