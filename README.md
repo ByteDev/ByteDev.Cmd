@@ -15,14 +15,6 @@ ByteDev.Cmd is hosted as a package on nuget.org.  To install from the Package Ma
 
 Further details can be found on the [nuget page](https://www.nuget.org/packages/ByteDev.Cmd/).
 
-## Code
-
-The repo can be cloned from git bash:
-
-`git clone https://github.com/ByteDev/ByteDev.Cmd`
-
-A test console application (ByteDev.Cmd.TestApp) is provided for testing and usage examples.
-
 ## Release Notes
 
 Releases follow semantic versioning.
@@ -31,26 +23,29 @@ Full details of the release notes can be viewed on [GitHub](https://github.com/B
 
 ## Usage
 
-Public classes provided include Output, Logger, MessageBox, Keyboard, Prompt.  The library also contains a namespace for handling input console arguments.
-
 ### Output class
 
-Provides wrapper functionality around the Console class to make writing out output easier.
+Provides wrapper functionality around the `System.Console` class to make writing out output easier.
+
+To use reference namespace: `ByteDev.Cmd`.
 
 Methods include:
-- Write: write text, MessageBox, Table.
-- WriteLine: write line of text.
-- WriteRainbowLine: write text in some crazy rainbow colors ;-).
-- WriteAlignLeft: write left aligned text (padded entire line).
-- WriteAlignRight: write right aligned text (padded entire line).
-- WriteAlignCenter: write center aligned text (padded entire line).
-- WriteAlignToSides: writes some text left aligned and some text right aligned (padded entire line).
-- WriteHorizontalLine: write horizontal line.
-- WriteBlankLines: write n blank lines.
+- Write
+- WriteLine
+- WriteRainbowLine
+- WriteAlignLeft
+- WriteAlignRight
+- WriteAlignCenter
+- WriteAlignToSides
+- WriteHorizontalLine
+- WriteBlankLines
+- WriteWrap
 
 ### Logger class
 
-Given optional LogLevel, LoggerColorTheme and Output dependencies provides logger style functionality wrapped around the Console class.
+Given optional `LogLevel`, `LoggerColorTheme` and `Output` dependencies provides logger style functionality for writting to the console.
+
+To use reference namespace: `ByteDev.Cmd.Logging`.
 
 Methods include:
 - WriteDebug
@@ -62,6 +57,8 @@ Methods include:
 ### Arguments namespace
 
 Handle console arguments using a `CmdArgInfo` class.  Define what arguments are allowed using the `CmdAllowedArg` class.
+
+To use reference namespace: `ByteDev.Cmd.Arguments`.
 
 ```csharp
 // args is the string array of args from Program.Main
@@ -102,4 +99,4 @@ else
 }
 ```
 
-The ByteDev.Cmd.TestApp project has a working example of this.
+The `ByteDev.Cmd.TestApp` project on GitHub also has a working example of this.

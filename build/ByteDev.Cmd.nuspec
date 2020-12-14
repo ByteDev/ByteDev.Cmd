@@ -7,16 +7,20 @@
     <authors>Paul Stanley</authors>
     <owners>Paul Stanley</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Library providing functionality to help when writing output from a .NET Console application.</description>
+    <description>Library providing functionality to help when creating .NET Console applications.</description>
     <copyright>Copyright 2019</copyright>
-    <tags>cmd console commandline command line output</tags>
-	<iconUrl>https://raw.githubusercontent.com/bytedev/ByteDev.Cmd/master/images/icon.png</iconUrl>
-	<dependencies>
+    <tags>cmd console commandline command line output color</tags>
+    <projectUrl>https://github.com/ByteDev/ByteDev.Cmd</projectUrl>
+    <icon>images\icon.png</icon>
+    <license type="file">LICENSE</license>
+    <dependencies>
       <group targetFramework=".NETStandard2.0" />
     </dependencies>
   </metadata>
   <files>
     <file src="..\src\ByteDev.Cmd\bin\Release\netstandard2.0\ByteDev.Cmd.dll" target="lib\netstandard2.0" />
-	<file src="..\src\ByteDev.Cmd\bin\Release\netstandard2.0\ByteDev.Cmd.xml" target="lib\netstandard2.0" />
+    <file src="..\src\ByteDev.Cmd\bin\Release\netstandard2.0\ByteDev.Cmd.xml" target="lib\netstandard2.0" />
+    <file src="..\images\icon.png" target="images\" />
+    <file src="..\LICENSE*" target="" />
   </files>
 </package>

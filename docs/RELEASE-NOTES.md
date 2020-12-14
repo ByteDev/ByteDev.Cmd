@@ -1,5 +1,16 @@
 # Release Notes
 
+## 4.2.1 - 14 December 2020
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- Package build fixes.
+
 ## 4.2.0 - 14 December 2020
 
 Breaking changes:
