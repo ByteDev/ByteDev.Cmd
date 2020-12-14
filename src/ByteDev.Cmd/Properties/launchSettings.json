@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "ByteDev.Cmd": {
+      "commandName": "Project"
+    }
+  }
+}

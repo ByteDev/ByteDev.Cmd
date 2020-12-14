@@ -17,13 +17,15 @@ namespace ByteDev.Cmd
             Console.Clear();
         }
 
+        #region Write
+
         /// <summary>
         /// Write character to the console.
         /// </summary>
         /// <param name="c">The character to write to the console.</param>
         public void Write(char c)
         {
-            Console.Write(c);
+            Write(c, null);
         }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace ByteDev.Cmd
         /// <param name="text">The text to write to the console.</param>
         public void Write(string text)
         {
-            Console.Write(text);
+            Write(text, null);
         }
 
         /// <summary>
@@ -83,7 +85,9 @@ namespace ByteDev.Cmd
                 throw new ArgumentNullException(nameof(unorderedList));
 
             foreach (var item in unorderedList.Items)
+            {
                 WriteLine($"{unorderedList.ItemPrefix}{item}", unorderedList.ItemColor);
+            }
         }
 
         /// <summary>
@@ -151,6 +155,10 @@ namespace ByteDev.Cmd
             
             WriteLine(HorizontalLineFactory.CreateBottom(line, table.BorderStyle), table.BorderColor);
         }
+        
+        #endregion
+
+        #region WriteLine
 
         /// <summary>
         /// Write a blank line to the console.
@@ -166,7 +174,7 @@ namespace ByteDev.Cmd
         /// <param name="c">The character to write to the console.</param>
         public void WriteLine(char c)
         {
-            Console.Write(c);
+            WriteLine(c, null);
         }
 
         /// <summary>
@@ -176,7 +184,16 @@ namespace ByteDev.Cmd
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the character.</param>
         public void WriteLine(char c, OutputColor color)
         {
-            WriteLine(c.ToString(), color);
+            if (color == null)
+            {
+                Console.WriteLine(c);
+            }
+            else
+            {
+                ConsoleEx.SetColor(color);
+                Console.WriteLine(c);
+                Console.ResetColor();
+            }
         }
 
         /// <summary>
@@ -185,7 +202,7 @@ namespace ByteDev.Cmd
         /// <param name="text">The text to be written.</param>
         public void WriteLine(string text)
         {
-            Console.WriteLine(text);
+            WriteLine(text, null);
         }
 
         /// <summary>
@@ -206,6 +223,10 @@ namespace ByteDev.Cmd
                 Console.ResetColor();
             }
         }
+
+        #endregion
+
+        #region WriteRainbowLine
 
         /// <summary>
         /// Write a line of text changing the color of each character.
@@ -232,7 +253,7 @@ namespace ByteDev.Cmd
         /// <exception cref="T:System.ArgumentNullException"><paramref name="colors" /> is null.</exception>
         public void WriteRainbowLine(string text, OutputColor[] colors)
         {
-            if(colors == null)
+            if (colors == null)
                 throw new ArgumentNullException(nameof(colors));
 
             var colorIndex = 0;
@@ -254,12 +275,25 @@ namespace ByteDev.Cmd
             Console.ResetColor();
         }
 
+        #endregion
+
+        #region WriteAlign...
+
+        /// <summary>
+        /// Write text left aligned to the console. 
+        /// </summary>
+        /// <param name="text">The text to be written.</param>
+        public void WriteAlignLeft(string text)
+        {
+            WriteAlignLeft(text, null);
+        }
+
         /// <summary>
         /// Write text left aligned to the console. 
         /// </summary>
         /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        public void WriteAlignLeft(string text, OutputColor color = null)
+        public void WriteAlignLeft(string text, OutputColor color)
         {
             WriteLine(text.PadRight(Console.WindowWidth - 1), color);
         }
@@ -268,8 +302,17 @@ namespace ByteDev.Cmd
         /// Write text right aligned to the console.
         /// </summary>
         /// <param name="text">The text to be written.</param>
+        public void WriteAlignRight(string text)
+        {
+            WriteAlignRight(text, null);
+        }
+
+        /// <summary>
+        /// Write text right aligned to the console.
+        /// </summary>
+        /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        public void WriteAlignRight(string text, OutputColor color = null)
+        public void WriteAlignRight(string text, OutputColor color)
         {
             WriteLine(text.PadLeft(Console.WindowWidth - 1), color);
         }
@@ -278,8 +321,17 @@ namespace ByteDev.Cmd
         /// Write text center aligned to the console.
         /// </summary>
         /// <param name="text">The text to be written.</param>
+        public void WriteAlignCenter(string text)
+        {
+            WriteAlignCenter(text, null);
+        }
+
+        /// <summary>
+        /// Write text center aligned to the console.
+        /// </summary>
+        /// <param name="text">The text to be written.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        public void WriteAlignCenter(string text, OutputColor color = null)
+        public void WriteAlignCenter(string text, OutputColor color)
         {
             decimal remainingWidth = Console.WindowWidth - text.Length - 1;
 
@@ -296,8 +348,18 @@ namespace ByteDev.Cmd
         /// </summary>
         /// <param name="leftText">The text to write to the left.</param>
         /// <param name="rightText">The text to write to the right.</param>
+        public void WriteAlignToSides(string leftText, string rightText)
+        {
+            WriteAlignToSides(leftText, rightText, null);
+        }
+
+        /// <summary>
+        /// Write left aligned and right aligned text to the console.
+        /// </summary>
+        /// <param name="leftText">The text to write to the left.</param>
+        /// <param name="rightText">The text to write to the right.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing the text.</param>
-        public void WriteAlignToSides(string leftText, string rightText, OutputColor color = null)
+        public void WriteAlignToSides(string leftText, string rightText, OutputColor color)
         {
             Write(leftText, color);
 
@@ -311,24 +373,105 @@ namespace ByteDev.Cmd
             WriteLine(rightText, color);
         }
 
+        #endregion
+
         /// <summary>
-        /// Write a horizontal line of characters to the console.
+        /// Write a horizontal line of repeated hyphen characters to the console.
         /// </summary>
-        /// <param name="character">Character repeat in the horizontal line.</param>
+        public void WriteHorizontalLine()
+        {
+            WriteHorizontalLine('-');
+        }
+
+        /// <summary>
+        /// Write a horizontal line of repeated characters to the console.
+        /// </summary>
+        /// <param name="character">Character repeated in the horizontal line.</param>
+        public void WriteHorizontalLine(char character)
+        {
+            WriteHorizontalLine(character, null);
+        }
+
+        /// <summary>
+        /// Write a horizontal line of repeated characters to the console.
+        /// </summary>
+        /// <param name="character">Character repeated in the horizontal line.</param>
         /// <param name="color">The <see cref="T:ByteDev.Cmd.OutputColor" /> to use when writing horizontal line's text.</param>
-        public void WriteHorizontalLine(char character = '-', OutputColor color = null)
+        public void WriteHorizontalLine(char character, OutputColor color)
         {
             WriteLine(new string(character, Console.WindowWidth - 1), color);
         }
-
+        
         /// <summary>
         /// Write a number of blank lines to the console.
         /// </summary>
         /// <param name="numberOfLines">The number of blank lines to write.</param>
-        public void WriteBlankLines(int numberOfLines = 1)
+        public void WriteBlankLines(int numberOfLines)
         {
             for (var i = 0; i < numberOfLines; i++)
+            {
                 WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// Write wrapped text to the console.
+        /// </summary>
+        /// <param name="text">Text to write.</param>
+        public void WriteWrap(string text)
+        {
+            WriteWrap(text, new WriteWrapOptions());
+        }
+
+        /// <summary>
+        /// Write wrapped text to the console.
+        /// </summary>
+        /// <param name="text">Text to write.</param>
+        /// <param name="options">Options for altering how the text is written.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="options" /> is null.</exception>
+        public void WriteWrap(string text, WriteWrapOptions options)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+
+            var charCount = 0;
+            string prevWord = string.Empty;
+
+            var words = text.Replace("\n", "\n ").Split(' ');
+
+            foreach (var word in words)
+            {
+                if (charCount + word.Length + 1 > options.LineLength ||            // gonna spill over the end (+1 for space)
+                    prevWord.EndsWith("\n"))     
+                {
+                    if (options.PadEnds)
+                        WriteSpacePadding(charCount, options.LineLength, options.OutputColor);
+                    
+                    WriteLine();
+                    charCount = 0;
+                }
+
+                if (charCount != 0)
+                {
+                    Write(" ", options.OutputColor);
+                    charCount++;
+                }
+
+                Write(word.SanitizeWord(), options.OutputColor);
+                charCount += word.GetWordLength();
+
+                prevWord = word;
+            }
+        }
+        
+        private void WriteSpacePadding(int charCount, int lineLen, OutputColor color)
+        {
+            var padLen = lineLen - charCount;
+
+            if (padLen > 0)
+            {
+                Write(new string(' ', padLen), color);
+            }
         }
 
         private void WriteTableRow(Table table, int rowNumber)

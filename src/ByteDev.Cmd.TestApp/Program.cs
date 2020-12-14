@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ByteDev.Cmd.Arguments;
-using ByteDev.Cmd.Lists;
 using ByteDev.Cmd.Logging;
-using ByteDev.Cmd.Tables;
-using ByteDev.Cmd.Tables.Borders;
 
 namespace ByteDev.Cmd.TestApp
 {
@@ -37,11 +34,11 @@ namespace ByteDev.Cmd.TestApp
                         switch (cmdArg.ShortName)
                         {
                             case 'o':
-                                TestOutput();
+                                Output.TestOutput();
                                 break;
 
                             case 'm':
-                                TestMessageBox();
+                                Output.TestMessageBox();
                                 break;
 
                             case 'l':
@@ -49,11 +46,11 @@ namespace ByteDev.Cmd.TestApp
                                 break;
 
                             case 't':
-                                TestTable();
+                                Output.TestTable();
                                 break;
 
                             case 'i':
-                                TestLists();
+                                Output.TestLists();
                                 break;
                         }
                     }
@@ -72,88 +69,9 @@ namespace ByteDev.Cmd.TestApp
             Prompt.PressAnyKey();
         }
 
-        private static void TestLists()
-        {
-            Output.WriteLine();
-            Output.WriteLine("***** Testing Lists *****");
-            Output.WriteLine();
-
-            var ul = new UnorderedList(new [] { "Item 1", "Item 2", "Item 3" })
-            {
-                ItemPrefix = "* ",
-                ItemColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.Gray)
-            };
-            Output.Write(ul);
-
-            Output.WriteLine();
-
-            var ol = new OrderedList(new[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12" })
-            {
-                ItemStartingNumber = 0,
-                ItemColor = new OutputColor(ConsoleColor.Black, ConsoleColor.Yellow),
-                ApplyItemNumberPadding = true
-            };
-            Output.Write(ol);
-        }
-
-        private static void TestOutput()
-        {
-            Output.WriteLine();
-            Output.WriteLine("***** Testing Output *****");
-            Output.WriteLine();
-
-            Output.WriteLine("Default colored text");
-            Output.WriteLine();
-
-            Output.WriteRainbowLine("Crazy rainbow message");
-            Output.WriteLine();
-
-            Output.WriteLine("Writing default horizontal line...");
-            Output.WriteHorizontalLine();
-            Output.WriteLine();
-
-            Output.WriteLine("Writing color block horizontal line...");
-            Output.WriteHorizontalLine('=', new OutputColor(ConsoleColor.White, ConsoleColor.Gray)); 
-            Output.WriteLine();
-
-            Output.WriteAlignLeft("Aligned Left", new OutputColor(ConsoleColor.White, ConsoleColor.Red));
-            Output.WriteAlignRight("Aligned Right", new OutputColor(ConsoleColor.White, ConsoleColor.DarkGreen));
-            Output.WriteAlignCenter("Aligned Center", new OutputColor(ConsoleColor.White, ConsoleColor.Blue));
-            Output.WriteAlignToSides("Left Bit", "Right Bit", new OutputColor(ConsoleColor.Black, ConsoleColor.Gray));
-            Output.WriteLine();
-
-            Output.WriteAlignLeft("Aligned Left (no color)");
-            Output.WriteAlignRight("Aligned Right (no color)");
-            Output.WriteAlignCenter("Aligned Center (no color)");
-            Output.WriteAlignToSides("Left Bit (no color)", "Right Bit (no color)");
-            Output.WriteLine();
-
-            Output.WriteLine("Writing 3 blank lines...");
-            Output.WriteBlankLines(3);
-
-            Output.WriteLine("Default colored text");
-        }
-
-        private static void TestMessageBox()
-        {
-            Output.WriteLine();
-            Output.WriteLine("***** Testing MessageBox *****");
-            Output.WriteLine();
-
-            var messageBox = new MessageBox("this is text in a message box\nsecond\nthird line")
-            {
-                BorderColor = new OutputColor(ConsoleColor.Red, ConsoleColor.Blue),
-                TextColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
-            };
-            
-            Output.Write(messageBox);
-        }
-
         private static void TestLogger()
         {
-            Output.WriteLine();
-            Output.WriteLine("***** Testing Logger *****");
-            Output.WriteLine();
+            Output.WriteTestHeader("Testing Logger");
 
             var logger = new Logger(LogLevel.Debug);
 
@@ -162,65 +80,6 @@ namespace ByteDev.Cmd.TestApp
             logger.WriteWarning("Warning message");
             logger.WriteError("Error message");
             logger.WriteCritical("Critical message");
-        }
-
-        private static void TestTable()
-        {
-            Output.WriteLine();
-            Output.WriteLine("***** Testing Table *****");
-            Output.WriteLine();
-
-            var t = new Table(1, 1, "XXX");
-            Output.Write(t);
-            
-            var table = CreateTable();
-            Output.Write(table);
-
-            var emptyTable = CreateEmptyTable();
-            Output.Write(emptyTable);
-
-            var defaultValueTable = CreateDefaultValueTable();
-            Output.Write(defaultValueTable);
-        }
-
-        private static Table CreateTable()
-        {
-            var table = new Table(3, 3)
-            {
-                BorderStyle = new BorderSimple(),
-                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue),
-                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
-            };
-
-            table.UpdateCell(new CellPosition(0, 0), new Cell("A111") { ValueColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.White)});
-
-            table.UpdateCell(new CellPosition(0, 1), new Cell("B1"));
-            table.UpdateCell(new CellPosition(1, 1), new Cell("B2"));
-            table.UpdateCell(new CellPosition(2, 1), new Cell("B3"));
-
-            table.UpdateCell(new CellPosition(2, 2), new Cell("C3"));
-            
-            return table;
-        }
-
-        private static Table CreateEmptyTable()
-        {
-            return new Table(3, 3)
-            {
-                BorderStyle = new BorderSingle(),
-                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red),
-                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Red)
-            };
-        }
-
-        private static Table CreateDefaultValueTable()
-        {
-            return new Table(3, 4, "AAAAA")
-            {
-                BorderStyle = new BorderDouble(),
-                BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray),
-                ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.DarkGray)
-            };
         }
     }
 }

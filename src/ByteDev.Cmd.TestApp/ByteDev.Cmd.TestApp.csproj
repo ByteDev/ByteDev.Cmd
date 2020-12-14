@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OutputTestExtensions.cs" />
+    <Compile Include="OutputTestListExtensions.cs" />
+    <Compile Include="OutputTestMessageBoxExtensions.cs" />
+    <Compile Include="OutputTestTableExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
