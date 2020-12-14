@@ -41,6 +41,8 @@ Methods include:
 - WriteBlankLines
 - WriteWrap
 
+---
+
 ### Logger class
 
 Given optional `LogLevel`, `LoggerColorTheme` and `Output` dependencies provides logger style functionality for writting to the console.
@@ -53,6 +55,8 @@ Methods include:
 - WriteWarning
 - WriteError
 - WriteCritical
+
+---
 
 ### Arguments namespace
 
