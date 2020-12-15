@@ -59,7 +59,7 @@ var msgBox = new MessageBox("Text in a box")
     TextColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
 };
             
-source.Write(msgBox);
+output.Write(msgBox);
 ```
 
 ```csharp
@@ -71,7 +71,7 @@ var ul = new UnorderedList(new [] { "Item 1", "Item 2", "Item 3" })
     ItemColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.Gray)
 };
 
-source.Write(ul);
+output.Write(ul);
 ```
 
 ```csharp
@@ -84,7 +84,7 @@ var ol = new OrderedList(new[] { "Item 1", "Item 2", "Item 3" })
     ApplyItemNumberPadding = true
 };
 
-source.Write(ol);
+output.Write(ol);
 ```
 
 ```csharp
@@ -108,7 +108,7 @@ table.UpdateCell(new CellPosition(2, 1), new Cell("B3"));
 
 table.UpdateCell(new CellPosition(2, 2), new Cell("C3"));
 
-source.Write(table);
+output.Write(table);
 ```
 
 ---
