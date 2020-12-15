@@ -129,7 +129,7 @@ try
 }
 catch (CmdArgException ex)
 {
-    // When creating an instance of CmdArgInfo if any invalid input a CmdArgException will be thrown
+    // When creating CmdArgInfo if any invalid input a CmdArgException will be thrown
     Console.WriteLine(ex.Message);
     Console.WriteLine(cmdAllowedArgs.HelpText());
 }
