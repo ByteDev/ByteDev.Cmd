@@ -41,6 +41,76 @@ Methods include:
 - WriteBlankLines
 - WriteWrap
 
+```csharp
+var output = new Output();
+
+var color = new OutputColor(ConsoleColor.White, ConsoleColor.Blue);
+
+output.WriteLine("Text in default colors");
+output.WriteLine("Text looks a bit like default PowerShell", color);
+```
+
+```csharp
+// Message Box
+
+var msgBox = new MessageBox("Text in a box")
+{
+    BorderColor = new OutputColor(ConsoleColor.Red, ConsoleColor.Blue),
+    TextColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
+};
+            
+source.Write(msgBox);
+```
+
+```csharp
+// Unordered List
+
+var ul = new UnorderedList(new [] { "Item 1", "Item 2", "Item 3" })
+{
+    ItemPrefix = "* ",
+    ItemColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.Gray)
+};
+
+source.Write(ul);
+```
+
+```csharp
+// Ordered List
+
+var ol = new OrderedList(new[] { "Item 1", "Item 2", "Item 3" })
+{
+    ItemStartingNumber = 0,
+    ItemColor = new OutputColor(ConsoleColor.Black, ConsoleColor.Yellow),
+    ApplyItemNumberPadding = true
+};
+
+source.Write(ol);
+```
+
+```csharp
+// Tables
+
+var table = new Table(3, 3)
+{
+    BorderStyle = new BorderSimple(),
+    BorderColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue),
+    ValueColor = new OutputColor(ConsoleColor.White, ConsoleColor.Blue)
+};
+
+table.UpdateCell(new CellPosition(0, 0), new Cell("A1") 
+{ 
+    ValueColor = new OutputColor(ConsoleColor.DarkBlue, ConsoleColor.White)
+});
+
+table.UpdateCell(new CellPosition(0, 1), new Cell("B1"));
+table.UpdateCell(new CellPosition(1, 1), new Cell("B2"));
+table.UpdateCell(new CellPosition(2, 1), new Cell("B3"));
+
+table.UpdateCell(new CellPosition(2, 2), new Cell("C3"));
+
+source.Write(table);
+```
+
 ---
 
 ### Logger class
