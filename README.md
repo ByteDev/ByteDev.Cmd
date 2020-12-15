@@ -45,7 +45,7 @@ Methods include:
 
 ### Logger class
 
-Given optional `LogLevel`, `LoggerColorTheme` and `Output` dependencies provides logger style functionality for writting to the console.
+The `Logger` class provides a convenient way to write log style messages to the console based on a given `LogLevel`.
 
 To use reference namespace: `ByteDev.Cmd.Logging`.
 
@@ -56,50 +56,82 @@ Methods include:
 - WriteError
 - WriteCritical
 
+```csharp
+// Example: at LogLevel.Error only Error and Critical messages will be written
+
+var logger = new Logger(LogLevel.Error);
+
+logger.WriteDebug("Debug message");
+logger.WriteInfo("Info message");
+logger.WriteWarning("Warning message");
+logger.WriteError("Error message");
+logger.WriteCritical("Critical message");
+```
+
 ---
 
 ### Arguments namespace
 
-Handle console arguments using a `CmdArgInfo` class.  Define what arguments are allowed using the `CmdAllowedArg` class.
-
 To use reference namespace: `ByteDev.Cmd.Arguments`.
 
-```csharp
-// args is the string array of args from Program.Main
+The namespace defines a number of types:
+- `CmdAllowedArg` - represents an allowed argument.
+- `CmdArgInfo` - represents `string[] args` from the console app and a collection of `CmdAllowedArg`.
+- `CmdArg` - represents an input command line argument.
 
-var allowedArgs = new List<CmdAllowedArg>
+```csharp
+// Define what arguments are allowed using the CmdAllowedArg class
+
+var cmdAllowedArgs = new List<CmdAllowedArg>
 {
-    new CmdAllowedArg('o', false) {LongName = "output", Description = "Output something"},
-    new CmdAllowedArg('p', true) {LongName = "path", Description = "Set a path"}
+    new CmdAllowedArg('o', false) 
+    {
+        LongName = "output", 
+        Description = "Output something"
+    },
+    new CmdAllowedArg('p', true) 
+    {
+        LongName = "path", 
+        Description = "Set a path", 
+        IsRequired = true
+    }
 };
 
-var cmdArgInfo = new CmdArgInfo(args, allowedArgs);
-```
-
-When creating an instance of `CmdArgInfo` if there was any invalid input a `CmdArgException` will be thrown.
-
-Once you have an instance of `CmdArgInfo` you can use it to determine what operations to perform:
-
-```csharp
-if (cmdArgInfo.HasArguments)
+try
 {
-    foreach (var cmdArg in cmdArgInfo.Arguments)
-    {
-        switch (cmdArg.ShortName)
-        {
-            case 'o':
-                DoSomeOutput();
-                break;
+    // Handle console arguments using the CmdArgInfo class
+    // args is the string array of args from Program.Main
 
-            case 'p':
-                SetPath(cmdArg.Value);
-                break;
+    var cmdArgInfo = new CmdArgInfo(args, cmdAllowedArgs);
+
+    // Use CmdArgInfo instance to determine what operations to perform
+
+    if (cmdArgInfo.HasArguments)
+    {
+        foreach (CmdArg cmdArg in cmdArgInfo.Arguments)
+        {
+            switch (cmdArg.ShortName)
+            {
+                case 'o':
+                    DoSomeOutput();
+                    break;
+
+                case 'p':
+                    SetPath(cmdArg.Value);
+                    break;
+            }
         }
     }
+    else
+    {
+        Console.WriteLine(cmdAllowedArgs.HelpText());
+    }
 }
-else
+catch (CmdArgException ex)
 {
-    Console.WriteLine(allowedArgs.HelpText());
+    // When creating an instance of CmdArgInfo if any invalid input a CmdArgException will be thrown
+    Console.WriteLine(ex.Message);
+    Console.WriteLine(cmdAllowedArgs.HelpText());
 }
 ```
 

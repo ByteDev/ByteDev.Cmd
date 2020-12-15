@@ -73,13 +73,29 @@ namespace ByteDev.Cmd.TestApp
         {
             Output.WriteTestHeader("Testing Logger");
 
-            var logger = new Logger(LogLevel.Debug);
+            Output.WriteLine();
+            Output.WriteLine("Set to LogLevel.Debug...");
+            Output.WriteLine();
 
-            logger.WriteDebug("Debug message");
-            logger.WriteInfo("Info message");
-            logger.WriteWarning("Warning message");
-            logger.WriteError("Error message");
-            logger.WriteCritical("Critical message");
+            var logger1 = new Logger(LogLevel.Debug);
+
+            logger1.WriteDebug("Debug message");
+            logger1.WriteInfo("Info message");
+            logger1.WriteWarning("Warning message");
+            logger1.WriteError("Error message");
+            logger1.WriteCritical("Critical message");
+
+            Output.WriteLine();
+            Output.WriteLine("Set to LogLevel.Error...");
+            Output.WriteLine();
+
+            var logger2 = new Logger(LogLevel.Error);
+
+            logger2.WriteDebug("Debug message");
+            logger2.WriteInfo("Info message");
+            logger2.WriteWarning("Warning message");
+            logger2.WriteError("Error message");
+            logger2.WriteCritical("Critical message");
         }
     }
 }
