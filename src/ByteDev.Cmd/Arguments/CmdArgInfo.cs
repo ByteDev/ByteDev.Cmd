@@ -94,7 +94,26 @@ namespace ByteDev.Cmd.Arguments
                 }
             }
 
+            CheckNumberArgsProvided();
             CheckAllRequiredArgsPresent();
+        }
+
+        private void CheckNumberArgsProvided()
+        {
+            if (Arguments.Count > _cmdAllowedArgs.Count)
+            {
+                var argNames = string.Empty;
+
+                foreach (var cmdArg in Arguments)
+                {
+                    if (argNames != string.Empty)
+                        argNames += ", ";
+
+                    argNames += cmdArg.ShortName;
+                }
+
+                throw new CmdArgException($"Allowed arguments {_cmdAllowedArgs.Count} but {Arguments.Count} provided ({argNames}).");
+            }
         }
 
         private void CheckAllRequiredArgsPresent()

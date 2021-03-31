@@ -1,5 +1,16 @@
 # Release Notes
 
+## 4.2.2 - 31 March 2021
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- Fix so same arg supplied more than once is caught.
+
 ## 4.2.1 - 14 December 2020
 
 Breaking changes:

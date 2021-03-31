@@ -35,7 +35,7 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenInputArgsIsNull_ThenThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new CmdArgInfo(null, new List<CmdAllowedArg>()));
+                Assert.Throws<ArgumentNullException>(() => _ = new CmdArgInfo(null, new List<CmdAllowedArg>()));
             }
 
             [Test]
@@ -110,7 +110,7 @@ namespace ByteDev.Cmd.UnitTests.Arguments
 
                 var args = new[] { "-a" };
 
-                var ex = Assert.Throws<CmdArgException>(() => new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
+                var ex = Assert.Throws<CmdArgException>(() => _ = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
                 Assert.That(ex.Message, Is.EqualTo($"Argument '{_allowedPathArg.ShortName}' is required and not supplied."));
             }
 
@@ -122,12 +122,24 @@ namespace ByteDev.Cmd.UnitTests.Arguments
 
                 var args = new string[0];
 
+                var ex = Assert.Throws<CmdArgException>(() => _ = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
+
                 var expectedMessage =
                     $"Argument '{_allowedPathArg.ShortName}' is required and not supplied." + Environment.NewLine +
                     $"Argument '{_allowedAllFilesArg.ShortName}' is required and not supplied.";
 
-                var ex = Assert.Throws<CmdArgException>(() => new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
                 Assert.That(ex.Message, Is.EqualTo(expectedMessage));
+            }
+
+            [Test]
+            public void WhenTwoArgIsRequiredAndThreeSupplied_ThenThrowException()   // aka same arg supplied more than once
+            {
+                const string value = @"C:\Temp";
+
+                var args = new[] {"-p", value, "-a", "-a"};
+
+                var ex = Assert.Throws<CmdArgException>(() => _ = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
+                Assert.That(ex.Message, Is.EqualTo("Allowed arguments 2 but 3 provided (p, a, a)."));
             }
 
             [Test]
