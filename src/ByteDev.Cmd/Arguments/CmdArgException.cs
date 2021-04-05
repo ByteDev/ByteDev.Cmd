@@ -12,7 +12,7 @@ namespace ByteDev.Cmd.Arguments
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Cmd.Arguments.CmdArgException" /> class.
         /// </summary>
-        public CmdArgException()
+        public CmdArgException(): base("Argument related error occured.")
         {
         }
 

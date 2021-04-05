@@ -151,6 +151,26 @@ namespace ByteDev.Cmd.UnitTests.Arguments
                 AssertAreEqual(sut.Arguments.Second(), _allowedAllFilesArg);
             }
 
+            [Test]
+            public void WhenArgNameHasTrailingSpace_ThenThrowException()
+            {
+                var args = new[] { "-a " };
+
+                var ex = Assert.Throws<CmdArgException>(() => _ = new CmdArgInfo(args, new[] { _allowedAllFilesArg }));
+                Assert.That(ex.Message, Is.EqualTo("Argument name: 'a ' is not allowed."));
+            }
+
+            [Test]
+            public void WhenArgValidHasTrailingSpace_ThenKeepTrailingSpace()
+            {
+                var args = new[] { "-p", "Something " };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedPathArg });
+
+                Assert.That(sut.Arguments.Single().ShortName, Is.EqualTo('p'));
+                Assert.That(sut.Arguments.Single().Value, Is.EqualTo("Something "));
+            }
+
             private static void AssertAreEqual(CmdArg cmdArg, CmdAllowedArg cmdAllowedArg)
             {
                 Assert.That(cmdArg.ShortName, Is.EqualTo(cmdAllowedArg.ShortName));
