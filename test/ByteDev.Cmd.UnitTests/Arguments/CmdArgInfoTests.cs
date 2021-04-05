@@ -10,6 +10,8 @@ namespace ByteDev.Cmd.UnitTests.Arguments
     [TestFixture]
     public class CmdArgInfoTests
     {
+        private const string value = @"C:\Temp";
+
         private CmdAllowedArg _allowedPathArg;
         private CmdAllowedArg _allowedAllFilesArg;
 
@@ -41,8 +43,6 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenOneInputNameWithValue_ThenSetArguments()
             {
-                const string value = @"C:\Temp";
-
                 var sut = new CmdArgInfo(new[] { "-p", value }, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.Single().Value, Is.EqualTo(value));
@@ -63,8 +63,6 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenTwoInput_NoValueArgFirst_ThenSetArguments()
             {
-                const string value = @"C:\Temp";
-
                 var sut = new CmdArgInfo(new[] { "-a", "-p", value }, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.First().Value, Is.Null);
@@ -77,8 +75,6 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenTwoInput_ValueArgFirst_ThenSetArguments()
             {
-                const string value = @"C:\Temp";
-
                 var sut = new CmdArgInfo(new[] { "-p", value, "-a" }, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.First().Value, Is.EqualTo(value));
@@ -91,8 +87,6 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenTwoLongInput_ValueArgFirst_ThenSetArguments()
             {
-                const string value = @"C:\Temp";
-
                 var sut = new CmdArgInfo(new[] { "-path", value, "-allfiles" }, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.First().Value, Is.EqualTo(value));
@@ -134,8 +128,6 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenTwoArgIsRequiredAndThreeSupplied_ThenThrowException()   // aka same arg supplied more than once
             {
-                const string value = @"C:\Temp";
-
                 var args = new[] {"-p", value, "-a", "-a"};
 
                 var ex = Assert.Throws<CmdArgException>(() => _ = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg }));
@@ -145,12 +137,12 @@ namespace ByteDev.Cmd.UnitTests.Arguments
             [Test]
             public void WhenTwoArgsIsRequired_AndAreBothPresent_ThenSetArguments()
             {
-                const string value = @"C:\Temp";
-
                 _allowedPathArg.IsRequired = true;
                 _allowedAllFilesArg.IsRequired = true;
 
-                var sut = new CmdArgInfo(new[] { "-p", value, "-a" }, new[] { _allowedPathArg, _allowedAllFilesArg });
+                var args = new[] { "-p", value, "-a" };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg });
 
                 Assert.That(sut.Arguments.First().Value, Is.EqualTo(value));
                 AssertAreEqual(sut.Arguments.First(), _allowedPathArg);
@@ -165,6 +157,62 @@ namespace ByteDev.Cmd.UnitTests.Arguments
                 Assert.That(cmdArg.LongName, Is.EqualTo(cmdAllowedArg.LongName));
                 Assert.That(cmdArg.Description, Is.EqualTo(cmdAllowedArg.Description));
                 Assert.That(cmdArg.HasValue, Is.EqualTo(cmdAllowedArg.HasValue));
+            }
+        }
+
+        [TestFixture]
+        public class HasArgument_ShortName : CmdArgInfoTests
+        {
+            [Test]
+            public void WhenArgumentNotPresent_ThenReturnFalse()
+            {
+                var args = new[] { "-p", value };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg });
+
+                var result = sut.HasArgument('a');
+
+                Assert.That(result, Is.False);
+            }
+
+            [Test]
+            public void WhenArgumentPresent_ThenReturnTrue()
+            {
+                var args = new[] { "-a" };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedAllFilesArg });
+
+                var result = sut.HasArgument('a');
+
+                Assert.That(result, Is.True);
+            }
+        }
+
+        [TestFixture]
+        public class HasArgument_LongName : CmdArgInfoTests
+        {
+            [Test]
+            public void WhenArgumentNotPresent_ThenReturnFalse()
+            {
+                var args = new[] { "-p", value };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedPathArg, _allowedAllFilesArg });
+
+                var result = sut.HasArgument("allfiles");
+
+                Assert.That(result, Is.False);
+            }
+
+            [Test]
+            public void WhenArgumentPresent_ThenReturnTrue()
+            {
+                var args = new[] { "-a" };
+
+                var sut = new CmdArgInfo(args, new[] { _allowedAllFilesArg });
+
+                var result = sut.HasArgument("allfiles");
+
+                Assert.That(result, Is.True);
             }
         }
     }

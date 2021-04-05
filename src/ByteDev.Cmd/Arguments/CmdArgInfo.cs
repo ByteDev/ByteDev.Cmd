@@ -51,7 +51,7 @@ namespace ByteDev.Cmd.Arguments
         }
 
         /// <summary>
-        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its short name.
+        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on it's short name.
         /// </summary>
         /// <param name="shortName">The short name of the argument.</param>
         /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the short name; otherwise null.</returns>
@@ -61,7 +61,7 @@ namespace ByteDev.Cmd.Arguments
         }
 
         /// <summary>
-        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on its long name.
+        /// Get <see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> based on it's long name.
         /// </summary>
         /// <param name="longName">The long name of the argument.</param>
         /// <returns><see cref="T:ByteDev.Cmd.Arguments.CmdArg" /> with the long name; otherwise null.</returns>
@@ -69,7 +69,27 @@ namespace ByteDev.Cmd.Arguments
         {
             return Arguments.SingleOrDefault(a => a.LongName == longName);
         }
-        
+
+        /// <summary>
+        /// Indicates if the argument exists based on it's short name.
+        /// </summary>
+        /// <param name="shortName">The short name of the argument.</param>
+        /// <returns>True if the argument exists; otherwise false.</returns>
+        public bool HasArgument(char shortName)
+        {
+            return GetArgument(shortName) != null;
+        }
+
+        /// <summary>
+        /// Indicates if the argument exists based on it's long name.
+        /// </summary>
+        /// <param name="longName">The long name of the argument.</param>
+        /// <returns>True if the argument exists; otherwise false.</returns>
+        public bool HasArgument(string longName)
+        {
+            return GetArgument(longName) != null;
+        }
+
         private void AddArguments(IEnumerable<string> inputArgs)
         {
             string currentName = null;

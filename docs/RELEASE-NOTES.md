@@ -1,5 +1,17 @@
 # Release Notes
 
+## 5.0.0 - 05 April 2021
+
+Breaking changes:
+- `CmdAllowedArg.LongName` can only contain `[A-Za-z]`.
+- `CmdAllowedArg.ShortName` can only contain `[A-Za-z]`.
+
+New features:
+- Added `CmdArgInfo.HasArgument`.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 4.2.2 - 31 March 2021
 
 Breaking changes:
